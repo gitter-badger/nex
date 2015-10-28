@@ -23,11 +23,23 @@ namespace nex
         public MainWindow()
         {
             InitializeComponent();
+
+            MouseLeftButtonDown += (sender, e) => DragMove();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            //
+        }
 
+        private void ExitButton_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown(); //終了する
+        }
+
+        private void MinimizeButton_Click(object sender, RoutedEventArgs e)
+        {
+            SystemCommands.MinimizeWindow(this); //最小化する
         }
     }
 }
