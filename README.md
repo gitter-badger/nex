@@ -1,4 +1,4 @@
-# <img alt="nex NEON logo" src="https://raw.githubusercontent.com/frainworks/nex/snowhite-Branch/nex/img/nex.png" width="50"/> nex
+# <a href="#"><img alt="nex NEON logo" src="https://raw.githubusercontent.com/frainworks/nex/snowhite-Branch/nex/img/nex.png" width="40"/></a> nex
 <img src="https://img.shields.io/badge/nex-NEON-red.svg">  
 
 [![Stories in Backlog](https://badge.waffle.io/frainworks/nex.svg?label=backlog&title=Backlog)](http://waffle.io/frainworks/nex)
