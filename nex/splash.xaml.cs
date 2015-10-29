@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -11,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using SunokoLibrary.Application;
 
 namespace nex
 {
@@ -22,6 +24,8 @@ namespace nex
         public splash()
         {
             InitializeComponent();
+
+            MouseLeftButtonDown += (sender, e) => DragMove();
         }
 
         private void ExitButton_Click(object sender, RoutedEventArgs e)
@@ -37,13 +41,41 @@ namespace nex
             //バージョンの取得
             Version ver = asm.GetName().Version;
 
+            //ソフトタイトルの取得
             System.Reflection.AssemblyTitleAttribute asmttl =
                 (System.Reflection.AssemblyTitleAttribute)
                 Attribute.GetCustomAttribute(
                     System.Reflection.Assembly.GetExecutingAssembly(),
                     typeof(System.Reflection.AssemblyTitleAttribute));
 
-            buildNumber.Content = asmttl.Title + "\n" + "Build" + " " + ver;
+            softname.Text = asmttl.Title;
+
+            buildNumber.Text = "Build" + " " + ver;
+
+            status.Text = "Starting up...";
+
+            status.Text = "Checking updates from repository...";
+            //Update codes here.
+
+            status.Text = "Getting cookie from Installed Browsers...";
+            getCookie();
+
+        }
+
+        public async void getCookie()
+        {
+            var importableBrowsers = await CookieGetters.Default.GetInstancesAsync(true);
+
+            var cookieGetter = importableBrowsers.First();
+            var targetUrl = new Uri("http://nicovideo.jp/");
+            var result = await cookieGetter.GetCookiesAsync(targetUrl);
+
+            //通信に使う際にはCookieContainerへ取得結果を追加して使用します。
+            var cookies = new CookieContainer();
+            cookies.Add(result.Cookies);
+
+            //次回起動時用の構成を保存します。
+            Properties.Settings.Default.SelectedGetterInfo = cookieGetter.SourceInfo;
         }
     }
 }

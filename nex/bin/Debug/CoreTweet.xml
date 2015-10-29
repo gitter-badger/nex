@@ -203,7 +203,7 @@
             <summary>
             Returns whether this converter can convert the object to the specified type.
             </summary>
-            <param name="type">A <see cref="T:System.Type"/> that represents the type you want to convert to.</param>
+            <param name="objectType">A <see cref="T:System.Type"/> that represents the type you want to convert to.</param>
             <returns>
             <c>true</c> if this converter can perform the conversion; otherwise, <c>false</c>.
             </returns>
@@ -649,7 +649,7 @@
             Gets or sets the options of the connection.
             </summary>
         </member>
-        <member name="M:CoreTweet.Core.TokensBase.CreateAuthorizationHeader(CoreTweet.MethodType,System.String,System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{System.String,System.Object}})">
+        <member name="M:CoreTweet.Core.TokensBase.CreateAuthorizationHeader(CoreTweet.MethodType,System.Uri,System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{System.String,System.Object}})">
             <summary>
             When overridden in a descendant class, creates a string for Authorization header.
             </summary>
@@ -1202,6 +1202,7 @@
         </member>
         <member name="P:CoreTweet.UserMentionEntity.Id">
             <summary>
+            Nullable.
             Gets or sets the ID of the mentioned user.
             </summary>
         </member>
@@ -1502,6 +1503,11 @@
             Gets or sets the count of the characters that is reserved for a media.
             </summary>
         </member>
+        <member name="P:CoreTweet.Configurations.DMTextCharacterLimit">
+            <summary>
+            Gets or sets the limit of the characters that can be sent as a DM.
+            </summary>
+        </member>
         <member name="P:CoreTweet.Configurations.MaxMediaPerUpload">
             <summary>
             Gets or sets the count of the limit of the count of medias that can be uploaded at once.
@@ -1681,6 +1687,11 @@
             Represents the result of the uploaded media.
             </summary>
         </member>
+        <member name="P:CoreTweet.MediaUploadResult.ExpiresAfterSecs">
+            <summary>
+            Gets or sets the remaining time before the media ID expires.
+            </summary>
+        </member>
         <member name="P:CoreTweet.MediaUploadResult.Image">
             <summary>
             Gets or sets the data of the image.
@@ -1762,6 +1773,37 @@
             A video file.
             </summary>
         </member>
+        <member name="T:CoreTweet.UploadInitCommandResult">
+            <summary>
+            Represents the result of INIT command.
+            </summary>
+        </member>
+        <member name="P:CoreTweet.UploadInitCommandResult.ExpiresAfterSecs">
+            <summary>
+            Gets or sets the remaining time before the media ID expires.
+            </summary>
+        </member>
+        <member name="P:CoreTweet.UploadInitCommandResult.MediaId">
+            <summary>
+            Gets or sets the ID of the media.
+            </summary>
+        </member>
+        <member name="P:CoreTweet.UploadInitCommandResult.RateLimit">
+            <summary>
+            Gets or sets the rate limit of the response.
+            </summary>
+        </member>
+        <member name="P:CoreTweet.UploadInitCommandResult.Json">
+            <summary>
+            Gets or sets the JSON of the response.
+            </summary>
+        </member>
+        <member name="M:CoreTweet.UploadInitCommandResult.ToString">
+            <summary>
+            Returns the ID of this instance.
+            </summary>
+            <returns>The ID of this instance.</returns>
+        </member>
         <member name="T:CoreTweet.OAuth2Token">
             <summary>
             The OAuth2 token, which is usually used for Application-only authentication.
@@ -1783,7 +1825,7 @@
             </summary>
             <param name="e">The token.</param>
         </member>
-        <member name="M:CoreTweet.OAuth2Token.CreateAuthorizationHeader(CoreTweet.MethodType,System.String,System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{System.String,System.Object}})">
+        <member name="M:CoreTweet.OAuth2Token.CreateAuthorizationHeader(CoreTweet.MethodType,System.Uri,System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{System.String,System.Object}})">
             <summary>
             Creates a string for Authorization header including bearer token.
             </summary>
@@ -1791,6 +1833,14 @@
             <param name="url">The URL.</param>
             <param name="parameters">The parameters.</param>
             <returns>A string for Authorization header.</returns>
+        </member>
+        <member name="M:CoreTweet.OAuth2Token.ToString">
+            <summary>
+            Returns a <see cref="T:System.String"/> that represents the current <see cref="T:CoreTweet.Tokens"/>.
+            </summary>
+            <returns>
+            A <see cref="T:System.String"/> that represents the current <see cref="T:CoreTweet.Tokens"/>.
+            </returns>
         </member>
         <member name="M:CoreTweet.OAuth2Token.Create(System.String,System.String,System.String)">
             <summary>
@@ -1802,12 +1852,14 @@
         </member>
         <member name="T:CoreTweet.Place">
             <summary>
-            <para>Represents a place, which are specific, named locations with corresponding geo coordinates.</para>
+            Represents a place, which are specific, named locations with corresponding geo coordinates.
+            </summary>
+            <remarks>
             <para>They can be attached to Tweets by specifying a place_id when tweeting.</para>
             <para>Tweets associated with places are not necessarily issued from that location but could also potentially be about that location.</para>
             <para>Places can be searched for.</para>
             <para>Tweets can also be found by place_id.</para>
-            </summary>
+            </remarks>
         </member>
         <member name="P:CoreTweet.Place.Attributes">
             <summary>
@@ -1870,13 +1922,15 @@
         </member>
         <member name="T:CoreTweet.PlaceResponse">
             <summary>
-            <para>Represents a place with rate limit.</para>
+            Represents a place with rate limit.
+            </summary>
+            <remarks> 
             <para>Places are specific, named locations with corresponding geo coordinates.</para>
             <para>They can be attached to Tweets by specifying a place_id when tweeting.</para>
             <para>Tweets associated with places are not necessarily issued from that location but could also potentially be about that location.</para>
             <para>Places can be searched for.</para>
             <para>Tweets can also be found by place_id.</para>
-            </summary>
+            </remarks>
         </member>
         <member name="P:CoreTweet.PlaceResponse.RateLimit">
             <summary>
@@ -2439,8 +2493,7 @@
         </member>
         <member name="P:CoreTweet.Status.RetweetCount">
             <summary>
-            <para>Gets or sets a number of approximately how many times the Tweet has been retweeted by Twitter users.</para>
-            <para></para>
+            Gets or sets a number of approximately how many times the Tweet has been retweeted by Twitter users.
             </summary>
         </member>
         <member name="P:CoreTweet.Status.IsRetweeted">
@@ -2467,8 +2520,7 @@
         </member>
         <member name="P:CoreTweet.Status.Text">
             <summary>
-            <para>Gets or sets the actual text of the status update.</para>
-            <para>See also: https://github.com/twitter/twitter-text-rb/blob/master/lib/twitter-text/regex.rb</para>
+            Gets or sets the actual text of the status update.
             </summary>
         </member>
         <member name="P:CoreTweet.Status.IsTruncated">
@@ -2582,7 +2634,22 @@
         </member>
         <member name="T:CoreTweet.FilterLevel">
             <summary>
-            Values of filter_level parameter.
+            Values of filter_level parameter and <see cref="P:CoreTweet.Status.FilterLevel"/> field.
+            </summary>
+        </member>
+        <member name="F:CoreTweet.FilterLevel.None">
+            <summary>
+            No filtering
+            </summary>
+        </member>
+        <member name="F:CoreTweet.FilterLevel.Low">
+            <summary>
+            Low filtering
+            </summary>
+        </member>
+        <member name="F:CoreTweet.FilterLevel.Medium">
+            <summary>
+            The most filtering
             </summary>
         </member>
         <member name="T:CoreTweet.DirectMessage">
@@ -2720,7 +2787,7 @@
             </summary>
             <param name="e">The token.</param>
         </member>
-        <member name="M:CoreTweet.Tokens.CreateAuthorizationHeader(CoreTweet.MethodType,System.String,System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{System.String,System.Object}})">
+        <member name="M:CoreTweet.Tokens.CreateAuthorizationHeader(CoreTweet.MethodType,System.Uri,System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{System.String,System.Object}})">
             <summary>
             Creates a string for Authorization header for OAuth 1.0A.
             </summary>
@@ -2777,6 +2844,12 @@
         <member name="P:CoreTweet.User.Description">
             <summary>
             <para>Gets or sets the user-defined string describing their account.</para>
+            <para>Nullable.</para>
+            </summary>
+        </member>
+        <member name="P:CoreTweet.User.Email">
+            <summary>
+            Gets or sets the email address.
             <para>Nullable.</para>
             </summary>
         </member>
@@ -3065,6 +3138,16 @@
             Gets or sets a value that determines if the user is following you.
             </summary>
         </member>
+        <member name="P:CoreTweet.RelationshipTarget.IsFollowingReceived">
+            <summary>
+            Gets or sets a value indicating whether the user has received a follower request from the other.
+            </summary>
+        </member>
+        <member name="P:CoreTweet.RelationshipTarget.IsFollowingRequested">
+            <summary>
+            Gets or sets a value indicating whether the user has sent a follower request to the other.
+            </summary>
+        </member>
         <member name="T:CoreTweet.RelationshipSource">
             <summary>
             Represents a frienship.
@@ -3305,12 +3388,11 @@
             Provides a set of static (Shared in Visual Basic) methods for sending a request to Twitter and some other web services.
             </summary>
         </member>
-        <member name="M:CoreTweet.Request.HttpGetAsync(System.String,System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{System.String,System.Object}},System.String,CoreTweet.ConnectionOptions,System.Threading.CancellationToken)">
+        <member name="M:CoreTweet.Request.HttpGetAsync(System.Uri,System.String,CoreTweet.ConnectionOptions,System.Threading.CancellationToken)">
             <summary>
             Sends a GET request as an asynchronous operation.
             </summary>
             <param name="url">The URL.</param>
-            <param name="prm">The parameters.</param>
             <param name="authorizationHeader">The OAuth header.</param>
             <param name="options">The connection options for the request.</param>
             <param name="cancellationToken">The cancellation token.</param>
@@ -3319,7 +3401,7 @@
             <para>The Result property on the task object returns the response.</para>
             </returns>
         </member>
-        <member name="M:CoreTweet.Request.HttpPostAsync(System.String,System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{System.String,System.Object}},System.String,CoreTweet.ConnectionOptions,System.Threading.CancellationToken)">
+        <member name="M:CoreTweet.Request.HttpPostAsync(System.Uri,System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{System.String,System.Object}},System.String,CoreTweet.ConnectionOptions,System.Threading.CancellationToken)">
             <summary>
             Sends a POST request as an asynchronous operation.
             </summary>
@@ -3333,7 +3415,7 @@
             <para>The Result property on the task object returns the response.</para>
             </returns>
         </member>
-        <member name="M:CoreTweet.Request.HttpPostWithMultipartFormDataAsync(System.String,System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{System.String,System.Object}},System.String,CoreTweet.ConnectionOptions,System.Threading.CancellationToken)">
+        <member name="M:CoreTweet.Request.HttpPostWithMultipartFormDataAsync(System.Uri,System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{System.String,System.Object}},System.String,CoreTweet.ConnectionOptions,System.Threading.CancellationToken)">
             <summary>
             Sends a POST request with multipart/form-data as an asynchronous operation.
             </summary>
@@ -3347,7 +3429,7 @@
             <para>The Result property on the task object returns the response.</para>
             </returns>
         </member>
-        <member name="M:CoreTweet.Request.GenerateSignature(CoreTweet.Tokens,System.String,System.String,System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{System.String,System.String}})">
+        <member name="M:CoreTweet.Request.GenerateSignature(CoreTweet.Tokens,CoreTweet.MethodType,System.Uri,System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{System.String,System.String}})">
             <summary>
             Generates the signature.
             </summary>
@@ -3497,6 +3579,9 @@
             <para>- <c>int</c> end_sleep_time (optional)</para>
             <para>- <c>string</c> time_zone (optional)</para>
             <para>- <c>string</c> lang (optional)</para>
+            <para>- <c>string</c> allow_contributor_request (optional)</para>
+            <para>- <c>string</c> current_password (optional)</para>
+            <para>- <c>string</c> allow_dms_from (optional)</para>
             </summary>
             <param name="parameters">The parameters.</param>
             <returns>The settings of the user.</returns>
@@ -3511,6 +3596,9 @@
             <para>- <c>int</c> end_sleep_time (optional)</para>
             <para>- <c>string</c> time_zone (optional)</para>
             <para>- <c>string</c> lang (optional)</para>
+            <para>- <c>string</c> allow_contributor_request (optional)</para>
+            <para>- <c>string</c> current_password (optional)</para>
+            <para>- <c>string</c> allow_dms_from (optional)</para>
             </summary>
             <param name="parameters">The parameters.</param>
             <returns>The settings of the user.</returns>
@@ -3525,11 +3613,14 @@
             <para>- <c>int</c> end_sleep_time (optional)</para>
             <para>- <c>string</c> time_zone (optional)</para>
             <para>- <c>string</c> lang (optional)</para>
+            <para>- <c>string</c> allow_contributor_request (optional)</para>
+            <para>- <c>string</c> current_password (optional)</para>
+            <para>- <c>string</c> allow_dms_from (optional)</para>
             </summary>
             <param name="parameters">The parameters.</param>
             <returns>The settings of the user.</returns>
         </member>
-        <member name="M:CoreTweet.Rest.Account.Settings(System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{System.Int32},System.String,System.String)">
+        <member name="M:CoreTweet.Rest.Account.Settings(System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{System.Int32},System.String,System.String,System.String,System.String,System.String)">
             <summary>
             <para>Returns settings (including current trend, geo and sleep time information) for the authenticating user or updates the authenticating user's settings.</para>
             </summary>
@@ -3539,6 +3630,9 @@
             <param name="end_sleep_time">optional.</param>
             <param name="time_zone">optional.</param>
             <param name="lang">optional.</param>
+            <param name="allow_contributor_request">optional.</param>
+            <param name="current_password">optional.</param>
+            <param name="allow_dms_from">optional.</param>
             <returns>The settings of the user.</returns>
         </member>
         <member name="M:CoreTweet.Rest.Account.SettingsAsync(System.Linq.Expressions.Expression{System.Func{System.String,System.Object}}[])">
@@ -3551,6 +3645,9 @@
             <para>- <c>int</c> end_sleep_time (optional)</para>
             <para>- <c>string</c> time_zone (optional)</para>
             <para>- <c>string</c> lang (optional)</para>
+            <para>- <c>string</c> allow_contributor_request (optional)</para>
+            <para>- <c>string</c> current_password (optional)</para>
+            <para>- <c>string</c> allow_dms_from (optional)</para>
             </summary>
             <param name="parameters">The parameters.</param>
             <returns>The settings of the user.</returns>
@@ -3565,6 +3662,9 @@
             <para>- <c>int</c> end_sleep_time (optional)</para>
             <para>- <c>string</c> time_zone (optional)</para>
             <para>- <c>string</c> lang (optional)</para>
+            <para>- <c>string</c> allow_contributor_request (optional)</para>
+            <para>- <c>string</c> current_password (optional)</para>
+            <para>- <c>string</c> allow_dms_from (optional)</para>
             </summary>
             <param name="parameters">The parameters.</param>
             <param name="cancellationToken">The cancellation token.</param>
@@ -3580,12 +3680,15 @@
             <para>- <c>int</c> end_sleep_time (optional)</para>
             <para>- <c>string</c> time_zone (optional)</para>
             <para>- <c>string</c> lang (optional)</para>
+            <para>- <c>string</c> allow_contributor_request (optional)</para>
+            <para>- <c>string</c> current_password (optional)</para>
+            <para>- <c>string</c> allow_dms_from (optional)</para>
             </summary>
             <param name="parameters">The parameters.</param>
             <param name="cancellationToken">The cancellation token.</param>
             <returns>The settings of the user.</returns>
         </member>
-        <member name="M:CoreTweet.Rest.Account.SettingsAsync(System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{System.Int32},System.String,System.String,System.Threading.CancellationToken)">
+        <member name="M:CoreTweet.Rest.Account.SettingsAsync(System.Nullable{System.Int32},System.Nullable{System.Boolean},System.Nullable{System.Int32},System.Nullable{System.Int32},System.String,System.String,System.String,System.String,System.String,System.Threading.CancellationToken)">
             <summary>
             <para>Returns settings (including current trend, geo and sleep time information) for the authenticating user or updates the authenticating user's settings.</para>
             </summary>
@@ -3595,6 +3698,9 @@
             <param name="end_sleep_time">optional.</param>
             <param name="time_zone">optional.</param>
             <param name="lang">optional.</param>
+            <param name="allow_contributor_request">optional.</param>
+            <param name="current_password">optional.</param>
+            <param name="allow_dms_from">optional.</param>
             <param name="cancellationToken">The cancellation token.</param>
             <returns>The settings of the user.</returns>
         </member>
@@ -7429,6 +7535,20 @@
             <param name="parameters">The parameters.</param>
             <returns>The relationship.</returns>
         </member>
+        <member name="M:CoreTweet.Rest.Friendships.Show(System.Int64)">
+            <summary>
+            <para>Returns detailed information about the relationship between two arbitrary users.</para>
+            </summary>
+            <param name="target_id">any one is required.</param>
+            <returns>The relationship.</returns>
+        </member>
+        <member name="M:CoreTweet.Rest.Friendships.Show(System.String)">
+            <summary>
+            <para>Returns detailed information about the relationship between two arbitrary users.</para>
+            </summary>
+            <param name="target_screen_name">any one is required.</param>
+            <returns>The relationship.</returns>
+        </member>
         <member name="M:CoreTweet.Rest.Friendships.Show(System.Int64,System.Int64)">
             <summary>
             <para>Returns detailed information about the relationship between two arbitrary users.</para>
@@ -7496,6 +7616,22 @@
             <para>- <c>string</c> target_screen_name (any one is required)</para>
             </summary>
             <param name="parameters">The parameters.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>The relationship.</returns>
+        </member>
+        <member name="M:CoreTweet.Rest.Friendships.ShowAsync(System.Int64,System.Threading.CancellationToken)">
+            <summary>
+            <para>Returns detailed information about the relationship between two arbitrary users.</para>
+            </summary>
+            <param name="target_id">any one is required.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>The relationship.</returns>
+        </member>
+        <member name="M:CoreTweet.Rest.Friendships.ShowAsync(System.String,System.Threading.CancellationToken)">
+            <summary>
+            <para>Returns detailed information about the relationship between two arbitrary users.</para>
+            </summary>
+            <param name="target_screen_name">any one is required.</param>
             <param name="cancellationToken">The cancellation token.</param>
             <returns>The relationship.</returns>
         </member>
@@ -12348,6 +12484,717 @@
             <param name="cancellationToken">The cancellation token.</param>
             <returns>The list.</returns>
         </member>
+        <member name="T:CoreTweet.Rest.Media">
+            <summary>
+            Provides a set of methods for the wrapper of POST media.
+            </summary>
+            <summary>
+            Provides a set of methods for the wrapper of POST media.
+            </summary>
+        </member>
+        <member name="M:CoreTweet.Rest.Media.Upload(System.Linq.Expressions.Expression{System.Func{System.String,System.Object}}[])">
+            <summary>
+            <para>Upload media (images) to Twitter for use in a Tweet or Twitter-hosted Card.</para>
+            <para>Available parameters:</para>
+            <para>- <c>Stream</c> media (any one is required)</para>
+            <para>- <c>IEnumerable&lt;byte&gt;</c> media (any one is required)</para>
+            <para>- <c>FileInfo</c> media (any one is required)</para>
+            <para>- <c>string</c> media_data (any one is required)</para>
+            <para>- <c>IEnumerable&lt;long&gt;</c> additional_owners (optional)</para>
+            </summary>
+            <param name="parameters">The parameters.</param>
+            <returns>The result for the uploaded media.</returns>
+        </member>
+        <member name="M:CoreTweet.Rest.Media.Upload(System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            <para>Upload media (images) to Twitter for use in a Tweet or Twitter-hosted Card.</para>
+            <para>Available parameters:</para>
+            <para>- <c>Stream</c> media (any one is required)</para>
+            <para>- <c>IEnumerable&lt;byte&gt;</c> media (any one is required)</para>
+            <para>- <c>FileInfo</c> media (any one is required)</para>
+            <para>- <c>string</c> media_data (any one is required)</para>
+            <para>- <c>IEnumerable&lt;long&gt;</c> additional_owners (optional)</para>
+            </summary>
+            <param name="parameters">The parameters.</param>
+            <returns>The result for the uploaded media.</returns>
+        </member>
+        <member name="M:CoreTweet.Rest.Media.Upload(System.Object)">
+            <summary>
+            <para>Upload media (images) to Twitter for use in a Tweet or Twitter-hosted Card.</para>
+            <para>Available parameters:</para>
+            <para>- <c>Stream</c> media (any one is required)</para>
+            <para>- <c>IEnumerable&lt;byte&gt;</c> media (any one is required)</para>
+            <para>- <c>FileInfo</c> media (any one is required)</para>
+            <para>- <c>string</c> media_data (any one is required)</para>
+            <para>- <c>IEnumerable&lt;long&gt;</c> additional_owners (optional)</para>
+            </summary>
+            <param name="parameters">The parameters.</param>
+            <returns>The result for the uploaded media.</returns>
+        </member>
+        <member name="M:CoreTweet.Rest.Media.Upload(System.IO.Stream,System.Collections.Generic.IEnumerable{System.Int64})">
+            <summary>
+            <para>Upload media (images) to Twitter for use in a Tweet or Twitter-hosted Card.</para>
+            </summary>
+            <param name="media">any one is required.</param>
+            <param name="additional_owners">optional.</param>
+            <returns>The result for the uploaded media.</returns>
+        </member>
+        <member name="M:CoreTweet.Rest.Media.Upload(System.Collections.Generic.IEnumerable{System.Byte},System.Collections.Generic.IEnumerable{System.Int64})">
+            <summary>
+            <para>Upload media (images) to Twitter for use in a Tweet or Twitter-hosted Card.</para>
+            </summary>
+            <param name="media">any one is required.</param>
+            <param name="additional_owners">optional.</param>
+            <returns>The result for the uploaded media.</returns>
+        </member>
+        <member name="M:CoreTweet.Rest.Media.Upload(System.IO.FileInfo,System.Collections.Generic.IEnumerable{System.Int64})">
+            <summary>
+            <para>Upload media (images) to Twitter for use in a Tweet or Twitter-hosted Card.</para>
+            </summary>
+            <param name="media">any one is required.</param>
+            <param name="additional_owners">optional.</param>
+            <returns>The result for the uploaded media.</returns>
+        </member>
+        <member name="M:CoreTweet.Rest.Media.Upload(System.String,System.Collections.Generic.IEnumerable{System.Int64})">
+            <summary>
+            <para>Upload media (images) to Twitter for use in a Tweet or Twitter-hosted Card.</para>
+            </summary>
+            <param name="media_data">any one is required.</param>
+            <param name="additional_owners">optional.</param>
+            <returns>The result for the uploaded media.</returns>
+        </member>
+        <member name="M:CoreTweet.Rest.Media.UploadAsync(System.Linq.Expressions.Expression{System.Func{System.String,System.Object}}[])">
+            <summary>
+            <para>Upload media (images) to Twitter for use in a Tweet or Twitter-hosted Card.</para>
+            <para>Available parameters:</para>
+            <para>- <c>Stream</c> media (any one is required)</para>
+            <para>- <c>IEnumerable&lt;byte&gt;</c> media (any one is required)</para>
+            <para>- <c>FileInfo</c> media (any one is required)</para>
+            <para>- <c>string</c> media_data (any one is required)</para>
+            <para>- <c>IEnumerable&lt;long&gt;</c> additional_owners (optional)</para>
+            </summary>
+            <param name="parameters">The parameters.</param>
+            <returns>The result for the uploaded media.</returns>
+        </member>
+        <member name="M:CoreTweet.Rest.Media.UploadAsync(System.Collections.Generic.IDictionary{System.String,System.Object},System.Threading.CancellationToken)">
+            <summary>
+            <para>Upload media (images) to Twitter for use in a Tweet or Twitter-hosted Card.</para>
+            <para>Available parameters:</para>
+            <para>- <c>Stream</c> media (any one is required)</para>
+            <para>- <c>IEnumerable&lt;byte&gt;</c> media (any one is required)</para>
+            <para>- <c>FileInfo</c> media (any one is required)</para>
+            <para>- <c>string</c> media_data (any one is required)</para>
+            <para>- <c>IEnumerable&lt;long&gt;</c> additional_owners (optional)</para>
+            </summary>
+            <param name="parameters">The parameters.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>The result for the uploaded media.</returns>
+        </member>
+        <member name="M:CoreTweet.Rest.Media.UploadAsync(System.Object,System.Threading.CancellationToken)">
+            <summary>
+            <para>Upload media (images) to Twitter for use in a Tweet or Twitter-hosted Card.</para>
+            <para>Available parameters:</para>
+            <para>- <c>Stream</c> media (any one is required)</para>
+            <para>- <c>IEnumerable&lt;byte&gt;</c> media (any one is required)</para>
+            <para>- <c>FileInfo</c> media (any one is required)</para>
+            <para>- <c>string</c> media_data (any one is required)</para>
+            <para>- <c>IEnumerable&lt;long&gt;</c> additional_owners (optional)</para>
+            </summary>
+            <param name="parameters">The parameters.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>The result for the uploaded media.</returns>
+        </member>
+        <member name="M:CoreTweet.Rest.Media.UploadAsync(System.IO.Stream,System.Collections.Generic.IEnumerable{System.Int64},System.Threading.CancellationToken)">
+            <summary>
+            <para>Upload media (images) to Twitter for use in a Tweet or Twitter-hosted Card.</para>
+            </summary>
+            <param name="media">any one is required.</param>
+            <param name="additional_owners">optional.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>The result for the uploaded media.</returns>
+        </member>
+        <member name="M:CoreTweet.Rest.Media.UploadAsync(System.Collections.Generic.IEnumerable{System.Byte},System.Collections.Generic.IEnumerable{System.Int64},System.Threading.CancellationToken)">
+            <summary>
+            <para>Upload media (images) to Twitter for use in a Tweet or Twitter-hosted Card.</para>
+            </summary>
+            <param name="media">any one is required.</param>
+            <param name="additional_owners">optional.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>The result for the uploaded media.</returns>
+        </member>
+        <member name="M:CoreTweet.Rest.Media.UploadAsync(System.IO.FileInfo,System.Collections.Generic.IEnumerable{System.Int64},System.Threading.CancellationToken)">
+            <summary>
+            <para>Upload media (images) to Twitter for use in a Tweet or Twitter-hosted Card.</para>
+            </summary>
+            <param name="media">any one is required.</param>
+            <param name="additional_owners">optional.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>The result for the uploaded media.</returns>
+        </member>
+        <member name="M:CoreTweet.Rest.Media.UploadAsync(System.String,System.Collections.Generic.IEnumerable{System.Int64},System.Threading.CancellationToken)">
+            <summary>
+            <para>Upload media (images) to Twitter for use in a Tweet or Twitter-hosted Card.</para>
+            </summary>
+            <param name="media_data">any one is required.</param>
+            <param name="additional_owners">optional.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>The result for the uploaded media.</returns>
+        </member>
+        <member name="M:CoreTweet.Rest.Media.UploadInitCommand(System.Linq.Expressions.Expression{System.Func{System.String,System.Object}}[])">
+            <summary>
+            <para>Initialize an upload.</para>
+            <para>Available parameters:</para>
+            <para>- <c>int</c> total_bytes (required)</para>
+            <para>- <c>string</c> media_type (any one is required)</para>
+            <para>- <c>UploadMediaType</c> media_type (any one is required)</para>
+            <para>- <c>IEnumerable&lt;long&gt;</c> additional_owners (optional)</para>
+            <para>- <c>string</c> media_category (optional)</para>
+            </summary>
+            <param name="parameters">The parameters.</param>
+            <returns>The result of INIT command.</returns>
+        </member>
+        <member name="M:CoreTweet.Rest.Media.UploadInitCommand(System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            <para>Initialize an upload.</para>
+            <para>Available parameters:</para>
+            <para>- <c>int</c> total_bytes (required)</para>
+            <para>- <c>string</c> media_type (any one is required)</para>
+            <para>- <c>UploadMediaType</c> media_type (any one is required)</para>
+            <para>- <c>IEnumerable&lt;long&gt;</c> additional_owners (optional)</para>
+            <para>- <c>string</c> media_category (optional)</para>
+            </summary>
+            <param name="parameters">The parameters.</param>
+            <returns>The result of INIT command.</returns>
+        </member>
+        <member name="M:CoreTweet.Rest.Media.UploadInitCommand(System.Object)">
+            <summary>
+            <para>Initialize an upload.</para>
+            <para>Available parameters:</para>
+            <para>- <c>int</c> total_bytes (required)</para>
+            <para>- <c>string</c> media_type (any one is required)</para>
+            <para>- <c>UploadMediaType</c> media_type (any one is required)</para>
+            <para>- <c>IEnumerable&lt;long&gt;</c> additional_owners (optional)</para>
+            <para>- <c>string</c> media_category (optional)</para>
+            </summary>
+            <param name="parameters">The parameters.</param>
+            <returns>The result of INIT command.</returns>
+        </member>
+        <member name="M:CoreTweet.Rest.Media.UploadInitCommand(System.Int32,System.String,System.Collections.Generic.IEnumerable{System.Int64},System.String)">
+            <summary>
+            <para>Initialize an upload.</para>
+            </summary>
+            <param name="total_bytes">required.</param>
+            <param name="media_type">any one is required.</param>
+            <param name="additional_owners">optional.</param>
+            <param name="media_category">optional.</param>
+            <returns>The result of INIT command.</returns>
+        </member>
+        <member name="M:CoreTweet.Rest.Media.UploadInitCommand(System.Int32,CoreTweet.UploadMediaType,System.Collections.Generic.IEnumerable{System.Int64},System.String)">
+            <summary>
+            <para>Initialize an upload.</para>
+            </summary>
+            <param name="total_bytes">required.</param>
+            <param name="media_type">any one is required.</param>
+            <param name="additional_owners">optional.</param>
+            <param name="media_category">optional.</param>
+            <returns>The result of INIT command.</returns>
+        </member>
+        <member name="M:CoreTweet.Rest.Media.UploadInitCommandAsync(System.Linq.Expressions.Expression{System.Func{System.String,System.Object}}[])">
+            <summary>
+            <para>Initialize an upload.</para>
+            <para>Available parameters:</para>
+            <para>- <c>int</c> total_bytes (required)</para>
+            <para>- <c>string</c> media_type (any one is required)</para>
+            <para>- <c>UploadMediaType</c> media_type (any one is required)</para>
+            <para>- <c>IEnumerable&lt;long&gt;</c> additional_owners (optional)</para>
+            <para>- <c>string</c> media_category (optional)</para>
+            </summary>
+            <param name="parameters">The parameters.</param>
+            <returns>The result of INIT command.</returns>
+        </member>
+        <member name="M:CoreTweet.Rest.Media.UploadInitCommandAsync(System.Collections.Generic.IDictionary{System.String,System.Object},System.Threading.CancellationToken)">
+            <summary>
+            <para>Initialize an upload.</para>
+            <para>Available parameters:</para>
+            <para>- <c>int</c> total_bytes (required)</para>
+            <para>- <c>string</c> media_type (any one is required)</para>
+            <para>- <c>UploadMediaType</c> media_type (any one is required)</para>
+            <para>- <c>IEnumerable&lt;long&gt;</c> additional_owners (optional)</para>
+            <para>- <c>string</c> media_category (optional)</para>
+            </summary>
+            <param name="parameters">The parameters.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>The result of INIT command.</returns>
+        </member>
+        <member name="M:CoreTweet.Rest.Media.UploadInitCommandAsync(System.Object,System.Threading.CancellationToken)">
+            <summary>
+            <para>Initialize an upload.</para>
+            <para>Available parameters:</para>
+            <para>- <c>int</c> total_bytes (required)</para>
+            <para>- <c>string</c> media_type (any one is required)</para>
+            <para>- <c>UploadMediaType</c> media_type (any one is required)</para>
+            <para>- <c>IEnumerable&lt;long&gt;</c> additional_owners (optional)</para>
+            <para>- <c>string</c> media_category (optional)</para>
+            </summary>
+            <param name="parameters">The parameters.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>The result of INIT command.</returns>
+        </member>
+        <member name="M:CoreTweet.Rest.Media.UploadInitCommandAsync(System.Int32,System.String,System.Collections.Generic.IEnumerable{System.Int64},System.String,System.Threading.CancellationToken)">
+            <summary>
+            <para>Initialize an upload.</para>
+            </summary>
+            <param name="total_bytes">required.</param>
+            <param name="media_type">any one is required.</param>
+            <param name="additional_owners">optional.</param>
+            <param name="media_category">optional.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>The result of INIT command.</returns>
+        </member>
+        <member name="M:CoreTweet.Rest.Media.UploadInitCommandAsync(System.Int32,CoreTweet.UploadMediaType,System.Collections.Generic.IEnumerable{System.Int64},System.String,System.Threading.CancellationToken)">
+            <summary>
+            <para>Initialize an upload.</para>
+            </summary>
+            <param name="total_bytes">required.</param>
+            <param name="media_type">any one is required.</param>
+            <param name="additional_owners">optional.</param>
+            <param name="media_category">optional.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>The result of INIT command.</returns>
+        </member>
+        <member name="M:CoreTweet.Rest.Media.UploadAppendCommand(System.Linq.Expressions.Expression{System.Func{System.String,System.Object}}[])">
+            <summary>
+            <para>Upload(s) of chunked data.</para>
+            <para>Available parameters:</para>
+            <para>- <c>long</c> media_id (required)</para>
+            <para>- <c>int</c> segment_index (required)</para>
+            <para>- <c>Stream</c> media (any one is required)</para>
+            <para>- <c>IEnumerable&lt;byte&gt;</c> media (any one is required)</para>
+            <para>- <c>FileInfo</c> media (any one is required)</para>
+            <para>- <c>string</c> media_data (any one is required)</para>
+            </summary>
+            <param name="parameters">The parameters.</param>
+            <returns></returns>
+        </member>
+        <member name="M:CoreTweet.Rest.Media.UploadAppendCommand(System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            <para>Upload(s) of chunked data.</para>
+            <para>Available parameters:</para>
+            <para>- <c>long</c> media_id (required)</para>
+            <para>- <c>int</c> segment_index (required)</para>
+            <para>- <c>Stream</c> media (any one is required)</para>
+            <para>- <c>IEnumerable&lt;byte&gt;</c> media (any one is required)</para>
+            <para>- <c>FileInfo</c> media (any one is required)</para>
+            <para>- <c>string</c> media_data (any one is required)</para>
+            </summary>
+            <param name="parameters">The parameters.</param>
+            <returns></returns>
+        </member>
+        <member name="M:CoreTweet.Rest.Media.UploadAppendCommand(System.Object)">
+            <summary>
+            <para>Upload(s) of chunked data.</para>
+            <para>Available parameters:</para>
+            <para>- <c>long</c> media_id (required)</para>
+            <para>- <c>int</c> segment_index (required)</para>
+            <para>- <c>Stream</c> media (any one is required)</para>
+            <para>- <c>IEnumerable&lt;byte&gt;</c> media (any one is required)</para>
+            <para>- <c>FileInfo</c> media (any one is required)</para>
+            <para>- <c>string</c> media_data (any one is required)</para>
+            </summary>
+            <param name="parameters">The parameters.</param>
+            <returns></returns>
+        </member>
+        <member name="M:CoreTweet.Rest.Media.UploadAppendCommand(System.Int64,System.Int32,System.IO.Stream)">
+            <summary>
+            <para>Upload(s) of chunked data.</para>
+            </summary>
+            <param name="media_id">required.</param>
+            <param name="segment_index">required.</param>
+            <param name="media">any one is required.</param>
+            <returns></returns>
+        </member>
+        <member name="M:CoreTweet.Rest.Media.UploadAppendCommand(System.Int64,System.Int32,System.Collections.Generic.IEnumerable{System.Byte})">
+            <summary>
+            <para>Upload(s) of chunked data.</para>
+            </summary>
+            <param name="media_id">required.</param>
+            <param name="segment_index">required.</param>
+            <param name="media">any one is required.</param>
+            <returns></returns>
+        </member>
+        <member name="M:CoreTweet.Rest.Media.UploadAppendCommand(System.Int64,System.Int32,System.IO.FileInfo)">
+            <summary>
+            <para>Upload(s) of chunked data.</para>
+            </summary>
+            <param name="media_id">required.</param>
+            <param name="segment_index">required.</param>
+            <param name="media">any one is required.</param>
+            <returns></returns>
+        </member>
+        <member name="M:CoreTweet.Rest.Media.UploadAppendCommand(System.Int64,System.Int32,System.String)">
+            <summary>
+            <para>Upload(s) of chunked data.</para>
+            </summary>
+            <param name="media_id">required.</param>
+            <param name="segment_index">required.</param>
+            <param name="media_data">any one is required.</param>
+            <returns></returns>
+        </member>
+        <member name="M:CoreTweet.Rest.Media.UploadAppendCommandAsync(System.Linq.Expressions.Expression{System.Func{System.String,System.Object}}[])">
+            <summary>
+            <para>Upload(s) of chunked data.</para>
+            <para>Available parameters:</para>
+            <para>- <c>long</c> media_id (required)</para>
+            <para>- <c>int</c> segment_index (required)</para>
+            <para>- <c>Stream</c> media (any one is required)</para>
+            <para>- <c>IEnumerable&lt;byte&gt;</c> media (any one is required)</para>
+            <para>- <c>FileInfo</c> media (any one is required)</para>
+            <para>- <c>string</c> media_data (any one is required)</para>
+            </summary>
+            <param name="parameters">The parameters.</param>
+            <returns></returns>
+        </member>
+        <member name="M:CoreTweet.Rest.Media.UploadAppendCommandAsync(System.Collections.Generic.IDictionary{System.String,System.Object},System.Threading.CancellationToken)">
+            <summary>
+            <para>Upload(s) of chunked data.</para>
+            <para>Available parameters:</para>
+            <para>- <c>long</c> media_id (required)</para>
+            <para>- <c>int</c> segment_index (required)</para>
+            <para>- <c>Stream</c> media (any one is required)</para>
+            <para>- <c>IEnumerable&lt;byte&gt;</c> media (any one is required)</para>
+            <para>- <c>FileInfo</c> media (any one is required)</para>
+            <para>- <c>string</c> media_data (any one is required)</para>
+            </summary>
+            <param name="parameters">The parameters.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns></returns>
+        </member>
+        <member name="M:CoreTweet.Rest.Media.UploadAppendCommandAsync(System.Object,System.Threading.CancellationToken)">
+            <summary>
+            <para>Upload(s) of chunked data.</para>
+            <para>Available parameters:</para>
+            <para>- <c>long</c> media_id (required)</para>
+            <para>- <c>int</c> segment_index (required)</para>
+            <para>- <c>Stream</c> media (any one is required)</para>
+            <para>- <c>IEnumerable&lt;byte&gt;</c> media (any one is required)</para>
+            <para>- <c>FileInfo</c> media (any one is required)</para>
+            <para>- <c>string</c> media_data (any one is required)</para>
+            </summary>
+            <param name="parameters">The parameters.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns></returns>
+        </member>
+        <member name="M:CoreTweet.Rest.Media.UploadAppendCommandAsync(System.Int64,System.Int32,System.IO.Stream,System.Threading.CancellationToken)">
+            <summary>
+            <para>Upload(s) of chunked data.</para>
+            </summary>
+            <param name="media_id">required.</param>
+            <param name="segment_index">required.</param>
+            <param name="media">any one is required.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns></returns>
+        </member>
+        <member name="M:CoreTweet.Rest.Media.UploadAppendCommandAsync(System.Int64,System.Int32,System.Collections.Generic.IEnumerable{System.Byte},System.Threading.CancellationToken)">
+            <summary>
+            <para>Upload(s) of chunked data.</para>
+            </summary>
+            <param name="media_id">required.</param>
+            <param name="segment_index">required.</param>
+            <param name="media">any one is required.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns></returns>
+        </member>
+        <member name="M:CoreTweet.Rest.Media.UploadAppendCommandAsync(System.Int64,System.Int32,System.IO.FileInfo,System.Threading.CancellationToken)">
+            <summary>
+            <para>Upload(s) of chunked data.</para>
+            </summary>
+            <param name="media_id">required.</param>
+            <param name="segment_index">required.</param>
+            <param name="media">any one is required.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns></returns>
+        </member>
+        <member name="M:CoreTweet.Rest.Media.UploadAppendCommandAsync(System.Int64,System.Int32,System.String,System.Threading.CancellationToken)">
+            <summary>
+            <para>Upload(s) of chunked data.</para>
+            </summary>
+            <param name="media_id">required.</param>
+            <param name="segment_index">required.</param>
+            <param name="media_data">any one is required.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns></returns>
+        </member>
+        <member name="M:CoreTweet.Rest.Media.UploadFinalizeCommand(System.Linq.Expressions.Expression{System.Func{System.String,System.Object}}[])">
+            <summary>
+            <para>Complete the upload.</para>
+            <para>Available parameters:</para>
+            <para>- <c>long</c> media_id (required)</para>
+            </summary>
+            <param name="parameters">The parameters.</param>
+            <returns>The result for the uploaded media.</returns>
+        </member>
+        <member name="M:CoreTweet.Rest.Media.UploadFinalizeCommand(System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            <para>Complete the upload.</para>
+            <para>Available parameters:</para>
+            <para>- <c>long</c> media_id (required)</para>
+            </summary>
+            <param name="parameters">The parameters.</param>
+            <returns>The result for the uploaded media.</returns>
+        </member>
+        <member name="M:CoreTweet.Rest.Media.UploadFinalizeCommand(System.Object)">
+            <summary>
+            <para>Complete the upload.</para>
+            <para>Available parameters:</para>
+            <para>- <c>long</c> media_id (required)</para>
+            </summary>
+            <param name="parameters">The parameters.</param>
+            <returns>The result for the uploaded media.</returns>
+        </member>
+        <member name="M:CoreTweet.Rest.Media.UploadFinalizeCommand(System.Int64)">
+            <summary>
+            <para>Complete the upload.</para>
+            </summary>
+            <param name="media_id">required.</param>
+            <returns>The result for the uploaded media.</returns>
+        </member>
+        <member name="M:CoreTweet.Rest.Media.UploadFinalizeCommandAsync(System.Linq.Expressions.Expression{System.Func{System.String,System.Object}}[])">
+            <summary>
+            <para>Complete the upload.</para>
+            <para>Available parameters:</para>
+            <para>- <c>long</c> media_id (required)</para>
+            </summary>
+            <param name="parameters">The parameters.</param>
+            <returns>The result for the uploaded media.</returns>
+        </member>
+        <member name="M:CoreTweet.Rest.Media.UploadFinalizeCommandAsync(System.Collections.Generic.IDictionary{System.String,System.Object},System.Threading.CancellationToken)">
+            <summary>
+            <para>Complete the upload.</para>
+            <para>Available parameters:</para>
+            <para>- <c>long</c> media_id (required)</para>
+            </summary>
+            <param name="parameters">The parameters.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>The result for the uploaded media.</returns>
+        </member>
+        <member name="M:CoreTweet.Rest.Media.UploadFinalizeCommandAsync(System.Object,System.Threading.CancellationToken)">
+            <summary>
+            <para>Complete the upload.</para>
+            <para>Available parameters:</para>
+            <para>- <c>long</c> media_id (required)</para>
+            </summary>
+            <param name="parameters">The parameters.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>The result for the uploaded media.</returns>
+        </member>
+        <member name="M:CoreTweet.Rest.Media.UploadFinalizeCommandAsync(System.Int64,System.Threading.CancellationToken)">
+            <summary>
+            <para>Complete the upload.</para>
+            </summary>
+            <param name="media_id">required.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>The result for the uploaded media.</returns>
+        </member>
+        <member name="M:CoreTweet.Rest.Media.UploadChunkedAsync(System.IO.Stream,System.Int32,CoreTweet.UploadMediaType,System.Linq.Expressions.Expression{System.Func{System.String,System.Object}}[])">
+            <summary>
+            <para>Uploads videos or chunked images to Twitter for use in a Tweet or Twitter-hosted Card as an asynchronous operation.</para>
+            <para>Available parameters:</para>
+            <para>- <c>IEnumerbale&lt;long&gt;</c> additional_owners (optional)</para>
+            </summary>
+            <param name="media">The raw binary file content being uploaded.</param>
+            <param name="totalBytes">The size of the media being uploaded in bytes.</param>
+            <param name="mediaType">The type of the media being uploaded.</param>
+            <param name="parameters">The parameters.</param>
+            <returns>
+            <para>The task object representing the asynchronous operation.</para>
+            <para>The Result property on the task object returns the result for the uploaded media.</para>
+            </returns>
+        </member>
+        <member name="M:CoreTweet.Rest.Media.UploadChunkedAsync(System.IO.Stream,System.Int32,CoreTweet.UploadMediaType,System.Collections.Generic.IDictionary{System.String,System.Object},System.Threading.CancellationToken)">
+            <summary>
+            <para>Uploads videos or chunked images to Twitter for use in a Tweet or Twitter-hosted Card as an asynchronous operation.</para>
+            <para>Available parameters:</para>
+            <para>- <c>IEnumerbale&lt;long&gt;</c> additional_owners (optional)</para>
+            </summary>
+            <param name="media">The raw binary file content being uploaded.</param>
+            <param name="totalBytes">The size of the media being uploaded in bytes.</param>
+            <param name="mediaType">The type of the media being uploaded.</param>
+            <param name="parameters">The parameters.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>
+            <para>The task object representing the asynchronous operation.</para>
+            <para>The Result property on the task object returns the result for the uploaded media.</para>
+            </returns>
+        </member>
+        <member name="M:CoreTweet.Rest.Media.UploadChunkedAsync(System.IO.Stream,System.Int32,CoreTweet.UploadMediaType,System.Object,System.Threading.CancellationToken)">
+            <summary>
+            <para>Uploads videos or chunked images to Twitter for use in a Tweet or Twitter-hosted Card as an asynchronous operation.</para>
+            <para>Available parameters:</para>
+            <para>- <c>IEnumerbale&lt;long&gt;</c> additional_owners (optional)</para>
+            </summary>
+            <param name="media">The raw binary file content being uploaded.</param>
+            <param name="totalBytes">The size of the media being uploaded in bytes.</param>
+            <param name="mediaType">The type of the media being uploaded.</param>
+            <param name="parameters">The parameters.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>
+            <para>The task object representing the asynchronous operation.</para>
+            <para>The Result property on the task object returns the result for the uploaded media.</para>
+            </returns>
+        </member>
+        <member name="M:CoreTweet.Rest.Media.UploadChunkedAsync(System.IO.Stream,System.Int32,CoreTweet.UploadMediaType,System.Collections.Generic.IEnumerable{System.Int64},System.Threading.CancellationToken)">
+            <summary>
+            Uploads videos or chunked images to Twitter for use in a Tweet or Twitter-hosted Card as an asynchronous operation.
+            </summary>
+            <param name="media">The raw binary file content being uploaded.</param>
+            <param name="totalBytes">The size of the media being uploaded in bytes.</param>
+            <param name="mediaType">The type of the media being uploaded.</param>
+            <param name="additional_owners">A comma-separated string of user IDs to set as additional owners who are allowed to use the returned media_id in Tweets or Cards.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>The result for the uploaded media.</returns>
+        </member>
+        <member name="M:CoreTweet.Rest.Media.UploadChunkedAsync(System.IO.Stream,CoreTweet.UploadMediaType,System.Linq.Expressions.Expression{System.Func{System.String,System.Object}}[])">
+            <summary>
+            <para>Uploads videos or chunked images to Twitter for use in a Tweet or Twitter-hosted Card as an asynchronous operation.</para>
+            <para>Available parameters:</para>
+            <para>- <c>IEnumerbale&lt;long&gt;</c> additional_owners (optional)</para>
+            </summary>
+            <param name="media">The raw binary file content being uploaded.</param>
+            <param name="mediaType">The type of the media being uploaded.</param>
+            <param name="parameters">The parameters.</param>
+            <returns>
+            <para>The task object representing the asynchronous operation.</para>
+            <para>The Result property on the task object returns the result for the uploaded media.</para>
+            </returns>
+        </member>
+        <member name="M:CoreTweet.Rest.Media.UploadChunkedAsync(System.IO.Stream,CoreTweet.UploadMediaType,System.Collections.Generic.IDictionary{System.String,System.Object},System.Threading.CancellationToken)">
+            <summary>
+            <para>Uploads videos or chunked images to Twitter for use in a Tweet or Twitter-hosted Card as an asynchronous operation.</para>
+            <para>Available parameters:</para>
+            <para>- <c>IEnumerbale&lt;long&gt;</c> additional_owners (optional)</para>
+            </summary>
+            <param name="media">The raw binary file content being uploaded.</param>
+            <param name="mediaType">The type of the media being uploaded.</param>
+            <param name="parameters">The parameters.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>
+            <para>The task object representing the asynchronous operation.</para>
+            <para>The Result property on the task object returns the result for the uploaded media.</para>
+            </returns>
+        </member>
+        <member name="M:CoreTweet.Rest.Media.UploadChunkedAsync(System.IO.Stream,CoreTweet.UploadMediaType,System.Object,System.Threading.CancellationToken)">
+            <summary>
+            <para>Uploads videos or chunked images to Twitter for use in a Tweet or Twitter-hosted Card as an asynchronous operation.</para>
+            <para>Available parameters:</para>
+            <para>- <c>IEnumerbale&lt;long&gt;</c> additional_owners (optional)</para>
+            </summary>
+            <param name="media">The raw binary file content being uploaded.</param>
+            <param name="mediaType">The type of the media being uploaded.</param>
+            <param name="parameters">The parameters.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>
+            <para>The task object representing the asynchronous operation.</para>
+            <para>The Result property on the task object returns the result for the uploaded media.</para>
+            </returns>
+        </member>
+        <member name="M:CoreTweet.Rest.Media.UploadChunkedAsync(System.IO.Stream,CoreTweet.UploadMediaType,System.Collections.Generic.IEnumerable{System.Int64},System.Threading.CancellationToken)">
+            <summary>
+            Uploads videos or chunked images to Twitter for use in a Tweet or Twitter-hosted Card as an asynchronous operation.
+            </summary>
+            <param name="media">The raw binary file content being uploaded.</param>
+            <param name="mediaType">The type of the media being uploaded.</param>
+            <param name="additional_owners">A comma-separated string of user IDs to set as additional owners who are allowed to use the returned media_id in Tweets or Cards.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>The result for the uploaded media.</returns>
+        </member>
+        <member name="M:CoreTweet.Rest.Media.UploadChunked(System.IO.Stream,System.Int32,CoreTweet.UploadMediaType,System.Linq.Expressions.Expression{System.Func{System.String,System.Object}}[])">
+            <summary>
+            <para>Uploads videos or chunked images to Twitter for use in a Tweet or Twitter-hosted Card.</para>
+            <para>Available parameters:</para>
+            <para>- <c>IEnumerbale&lt;long&gt;</c> additional_owners (optional)</para>
+            </summary>
+            <param name="media">The raw binary file content being uploaded.</param>
+            <param name="totalBytes">The size of the media being uploaded in bytes.</param>
+            <param name="mediaType">The type of the media being uploaded.</param>
+            <param name="parameters">The parameters.</param>
+            <returns>The result for the uploaded media.</returns>
+        </member>
+        <member name="M:CoreTweet.Rest.Media.UploadChunked(System.IO.Stream,System.Int32,CoreTweet.UploadMediaType,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            <para>Uploads videos or chunked images to Twitter for use in a Tweet or Twitter-hosted Card.</para>
+            <para>Available parameters:</para>
+            <para>- <c>IEnumerbale&lt;long&gt;</c> additional_owners (optional)</para>
+            </summary>
+            <param name="media">The raw binary file content being uploaded.</param>
+            <param name="totalBytes">The size of the media being uploaded in bytes.</param>
+            <param name="mediaType">The type of the media being uploaded.</param>
+            <param name="parameters">The parameters.</param>
+            <returns>The result for the uploaded media.</returns>
+        </member>
+        <member name="M:CoreTweet.Rest.Media.UploadChunked(System.IO.Stream,System.Int32,CoreTweet.UploadMediaType,System.Object)">
+            <summary>
+            <para>Uploads videos or chunked images to Twitter for use in a Tweet or Twitter-hosted Card.</para>
+            <para>Available parameters:</para>
+            <para>- <c>IEnumerbale&lt;long&gt;</c> additional_owners (optional)</para>
+            </summary>
+            <param name="media">The raw binary file content being uploaded.</param>
+            <param name="totalBytes">The size of the media being uploaded in bytes.</param>
+            <param name="mediaType">The type of the media being uploaded.</param>
+            <param name="parameters">The parameters.</param>
+            <returns>The result for the uploaded media.</returns>
+        </member>
+        <member name="M:CoreTweet.Rest.Media.UploadChunked(System.IO.Stream,System.Int32,CoreTweet.UploadMediaType,System.Collections.Generic.IEnumerable{System.Int64})">
+            <summary>
+            Uploads videos or chunked images to Twitter for use in a Tweet or Twitter-hosted Card.
+            </summary>
+            <param name="media">The raw binary file content being uploaded.</param>
+            <param name="totalBytes">The size of the media being uploaded in bytes.</param>
+            <param name="mediaType">The type of the media being uploaded.</param>
+            <param name="additional_owners">A comma-separated string of user IDs to set as additional owners who are allowed to use the returned media_id in Tweets or Cards.</param>
+            <returns>The result for the uploaded media.</returns>
+        </member>
+        <member name="M:CoreTweet.Rest.Media.UploadChunked(System.IO.Stream,CoreTweet.UploadMediaType,System.Linq.Expressions.Expression{System.Func{System.String,System.Object}}[])">
+            <summary>
+            <para>Uploads videos or chunked images to Twitter for use in a Tweet or Twitter-hosted Card.</para>
+            <para>Available parameters:</para>
+            <para>- <c>IEnumerbale&lt;long&gt;</c> additional_owners (optional)</para>
+            </summary>
+            <param name="media">The raw binary file content being uploaded.</param>
+            <param name="mediaType">The type of the media being uploaded.</param>
+            <param name="parameters">The parameters.</param>
+            <returns>The result for the uploaded media.</returns>
+        </member>
+        <member name="M:CoreTweet.Rest.Media.UploadChunked(System.IO.Stream,CoreTweet.UploadMediaType,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            <para>Uploads videos or chunked images to Twitter for use in a Tweet or Twitter-hosted Card.</para>
+            <para>Available parameters:</para>
+            <para>- <c>IEnumerbale&lt;long&gt;</c> additional_owners (optional)</para>
+            </summary>
+            <param name="media">The raw binary file content being uploaded.</param>
+            <param name="mediaType">The type of the media being uploaded.</param>
+            <param name="parameters">The parameters.</param>
+            <returns>The result for the uploaded media.</returns>
+        </member>
+        <member name="M:CoreTweet.Rest.Media.UploadChunked(System.IO.Stream,CoreTweet.UploadMediaType,System.Object)">
+            <summary>
+            <para>Uploads videos or chunked images to Twitter for use in a Tweet or Twitter-hosted Card.</para>
+            <para>Available parameters:</para>
+            <para>- <c>IEnumerbale&lt;long&gt;</c> additional_owners (optional)</para>
+            </summary>
+            <param name="media">The raw binary file content being uploaded.</param>
+            <param name="mediaType">The type of the media being uploaded.</param>
+            <param name="parameters">The parameters.</param>
+            <returns>The result for the uploaded media.</returns>
+        </member>
+        <member name="M:CoreTweet.Rest.Media.UploadChunked(System.IO.Stream,CoreTweet.UploadMediaType,System.Collections.Generic.IEnumerable{System.Int64})">
+            <summary>
+            Uploads videos or chunked images to Twitter for use in a Tweet or Twitter-hosted Card.
+            </summary>
+            <param name="media">The raw binary file content being uploaded.</param>
+            <param name="mediaType">The type of the media being uploaded.</param>
+            <param name="additional_owners">A comma-separated string of user IDs to set as additional owners who are allowed to use the returned media_id in Tweets or Cards.</param>
+            <returns>The result for the uploaded media.</returns>
+        </member>
         <member name="T:CoreTweet.Rest.MutesUsers">
             <summary>
             Provides a set of methods for the wrapper of GET/POST mutes/users.
@@ -16493,350 +17340,6 @@
             <param name="cancellationToken">The cancellation token.</param>
             <returns>The user.</returns>
         </member>
-        <member name="T:CoreTweet.Rest.Media">
-            <summary>
-            Provides a set of methods for the wrapper of POST media.
-            </summary>
-        </member>
-        <member name="M:CoreTweet.Rest.Media.UploadAsync(System.Linq.Expressions.Expression{System.Func{System.String,System.Object}}[])">
-            <summary>
-            Upload media (images) to Twitter for use in a Tweet or Twitter-hosted Card as an asynchronous operation.
-            <para>Available parameters:</para>
-            <para>- <c>Stream</c> / <c>IEnumerable&lt;byte&gt;</c> / <c>FileInfo</c> media (required)</para>
-            </summary>
-            <param name="parameters">The parameters.</param>
-            <returns>
-            <para>The task object representing the asynchronous operation.</para>
-            <para>The Result property on the task object returns the result for the uploaded media.</para>
-            </returns>
-        </member>
-        <member name="M:CoreTweet.Rest.Media.UploadAsync(System.Collections.Generic.IDictionary{System.String,System.Object},System.Threading.CancellationToken)">
-            <summary>
-            Upload media (images) to Twitter for use in a Tweet or Twitter-hosted Card as an asynchronous operation.
-            <para>Available parameters:</para>
-            <para>- <c>Stream</c> / <c>IEnumerable&lt;byte&gt;</c> / <c>FileInfo</c> media (required)</para>
-            </summary>
-            <param name="parameters">The parameters.</param>
-            <param name="cancellationToken">The cancellation token.</param>
-            <returns>
-            <para>The task object representing the asynchronous operation.</para>
-            <para>The Result property on the task object returns the result for the uploaded media.</para>
-            </returns>
-        </member>
-        <member name="M:CoreTweet.Rest.Media.UploadAsync(System.Object,System.Threading.CancellationToken)">
-            <summary>
-            Upload media (images) to Twitter for use in a Tweet or Twitter-hosted Card as an asynchronous operation.
-            <para>Available parameters:</para>
-            <para>- <c>Stream</c> / <c>IEnumerable&lt;byte&gt;</c> / <c>FileInfo</c> media (required)</para>
-            </summary>
-            <param name="parameters">The parameters.</param>
-            <param name="cancellationToken">The cancellation token.</param>
-            <returns>
-            <para>The task object representing the asynchronous operation.</para>
-            <para>The Result property on the task object returns the result for the uploaded media.</para>
-            </returns>
-        </member>
-        <member name="M:CoreTweet.Rest.Media.UploadAsync(System.IO.Stream,System.Collections.Generic.IEnumerable{System.Int64},System.Threading.CancellationToken)">
-            <summary>
-            Upload media (images) to Twitter for use in a Tweet or Twitter-hosted Card as an asynchronous operation.
-            </summary>
-            <param name="media">The raw binary file content being uploaded.</param>
-            <param name="additional_owners">A comma-separated string of user IDs to set as additional owners who are allowed to use the returned media_id in Tweets or Cards.</param>
-            <param name="cancellationToken">The cancellation token.</param>
-            <returns>The result for the uploaded media.</returns>
-        </member>
-        <member name="M:CoreTweet.Rest.Media.UploadAsync(System.Collections.Generic.IEnumerable{System.Byte},System.Collections.Generic.IEnumerable{System.Int64},System.Threading.CancellationToken)">
-            <summary>
-            Upload media (images) to Twitter for use in a Tweet or Twitter-hosted Card as an asynchronous operation.
-            </summary>
-            <param name="media">The raw binary file content being uploaded.</param>
-            <param name="additional_owners">A comma-separated string of user IDs to set as additional owners who are allowed to use the returned media_id in Tweets or Cards.</param>
-            <param name="cancellationToken">The cancellation token.</param>
-            <returns>The result for the uploaded media.</returns>
-        </member>
-        <member name="M:CoreTweet.Rest.Media.UploadAsync(System.IO.FileInfo,System.Collections.Generic.IEnumerable{System.Int64},System.Threading.CancellationToken)">
-            <summary>
-            Upload media (images) to Twitter for use in a Tweet or Twitter-hosted Card as an asynchronous operation.
-            </summary>
-            <param name="media">The raw binary file content being uploaded.</param>
-            <param name="additional_owners">A comma-separated string of user IDs to set as additional owners who are allowed to use the returned media_id in Tweets or Cards.</param>
-            <param name="cancellationToken">The cancellation token.</param>
-            <returns>The result for the uploaded media.</returns>
-        </member>
-        <member name="M:CoreTweet.Rest.Media.UploadAsync(System.String,System.Collections.Generic.IEnumerable{System.Int64},System.Threading.CancellationToken)">
-            <summary>
-            Upload media (images) to Twitter for use in a Tweet or Twitter-hosted Card as an asynchronous operation.
-            </summary>
-            <param name="media_data">The base64-encoded file content being uploaded.</param>
-            <param name="additional_owners">A comma-separated string of user IDs to set as additional owners who are allowed to use the returned media_id in Tweets or Cards.</param>
-            <param name="cancellationToken">The cancellation token.</param>
-            <returns>The result for the uploaded media.</returns>
-        </member>
-        <member name="M:CoreTweet.Rest.Media.UploadChunkedAsync(System.IO.Stream,System.Int32,CoreTweet.UploadMediaType,System.Linq.Expressions.Expression{System.Func{System.String,System.Object}}[])">
-            <summary>
-            <para>Uploads videos or chunked images to Twitter for use in a Tweet or Twitter-hosted Card as an asynchronous operation.</para>
-            <para>Available parameters:</para>
-            <para>- <c>IEnumerbale&lt;long&gt;</c> additional_owners (optional)</para>
-            </summary>
-            <param name="media">The raw binary file content being uploaded.</param>
-            <param name="totalBytes">The size of the media being uploaded in bytes.</param>
-            <param name="mediaType">The type of the media being uploaded.</param>
-            <param name="parameters">The parameters.</param>
-            <returns>
-            <para>The task object representing the asynchronous operation.</para>
-            <para>The Result property on the task object returns the result for the uploaded media.</para>
-            </returns>
-        </member>
-        <member name="M:CoreTweet.Rest.Media.UploadChunkedAsync(System.IO.Stream,System.Int32,CoreTweet.UploadMediaType,System.Collections.Generic.IDictionary{System.String,System.Object},System.Threading.CancellationToken)">
-            <summary>
-            <para>Uploads videos or chunked images to Twitter for use in a Tweet or Twitter-hosted Card as an asynchronous operation.</para>
-            <para>Available parameters:</para>
-            <para>- <c>IEnumerbale&lt;long&gt;</c> additional_owners (optional)</para>
-            </summary>
-            <param name="media">The raw binary file content being uploaded.</param>
-            <param name="totalBytes">The size of the media being uploaded in bytes.</param>
-            <param name="mediaType">The type of the media being uploaded.</param>
-            <param name="parameters">The parameters.</param>
-            <param name="cancellationToken">The cancellation token.</param>
-            <returns>
-            <para>The task object representing the asynchronous operation.</para>
-            <para>The Result property on the task object returns the result for the uploaded media.</para>
-            </returns>
-        </member>
-        <member name="M:CoreTweet.Rest.Media.UploadChunkedAsync(System.IO.Stream,System.Int32,CoreTweet.UploadMediaType,System.Object,System.Threading.CancellationToken)">
-            <summary>
-            <para>Uploads videos or chunked images to Twitter for use in a Tweet or Twitter-hosted Card as an asynchronous operation.</para>
-            <para>Available parameters:</para>
-            <para>- <c>IEnumerbale&lt;long&gt;</c> additional_owners (optional)</para>
-            </summary>
-            <param name="media">The raw binary file content being uploaded.</param>
-            <param name="totalBytes">The size of the media being uploaded in bytes.</param>
-            <param name="mediaType">The type of the media being uploaded.</param>
-            <param name="parameters">The parameters.</param>
-            <param name="cancellationToken">The cancellation token.</param>
-            <returns>
-            <para>The task object representing the asynchronous operation.</para>
-            <para>The Result property on the task object returns the result for the uploaded media.</para>
-            </returns>
-        </member>
-        <member name="M:CoreTweet.Rest.Media.UploadChunkedAsync(System.IO.Stream,System.Int32,CoreTweet.UploadMediaType,System.Collections.Generic.IEnumerable{System.Int64},System.Threading.CancellationToken)">
-            <summary>
-            Uploads videos or chunked images to Twitter for use in a Tweet or Twitter-hosted Card as an asynchronous operation.
-            </summary>
-            <param name="media">The raw binary file content being uploaded.</param>
-            <param name="totalBytes">The size of the media being uploaded in bytes.</param>
-            <param name="mediaType">The type of the media being uploaded.</param>
-            <param name="additional_owners">A comma-separated string of user IDs to set as additional owners who are allowed to use the returned media_id in Tweets or Cards.</param>
-            <param name="cancellationToken">The cancellation token.</param>
-            <returns>The result for the uploaded media.</returns>
-        </member>
-        <member name="M:CoreTweet.Rest.Media.UploadChunkedAsync(System.IO.Stream,CoreTweet.UploadMediaType,System.Linq.Expressions.Expression{System.Func{System.String,System.Object}}[])">
-            <summary>
-            <para>Uploads videos or chunked images to Twitter for use in a Tweet or Twitter-hosted Card as an asynchronous operation.</para>
-            <para>Available parameters:</para>
-            <para>- <c>IEnumerbale&lt;long&gt;</c> additional_owners (optional)</para>
-            </summary>
-            <param name="media">The raw binary file content being uploaded.</param>
-            <param name="mediaType">The type of the media being uploaded.</param>
-            <param name="parameters">The parameters.</param>
-            <returns>
-            <para>The task object representing the asynchronous operation.</para>
-            <para>The Result property on the task object returns the result for the uploaded media.</para>
-            </returns>
-        </member>
-        <member name="M:CoreTweet.Rest.Media.UploadChunkedAsync(System.IO.Stream,CoreTweet.UploadMediaType,System.Collections.Generic.IDictionary{System.String,System.Object},System.Threading.CancellationToken)">
-            <summary>
-            <para>Uploads videos or chunked images to Twitter for use in a Tweet or Twitter-hosted Card as an asynchronous operation.</para>
-            <para>Available parameters:</para>
-            <para>- <c>IEnumerbale&lt;long&gt;</c> additional_owners (optional)</para>
-            </summary>
-            <param name="media">The raw binary file content being uploaded.</param>
-            <param name="mediaType">The type of the media being uploaded.</param>
-            <param name="parameters">The parameters.</param>
-            <param name="cancellationToken">The cancellation token.</param>
-            <returns>
-            <para>The task object representing the asynchronous operation.</para>
-            <para>The Result property on the task object returns the result for the uploaded media.</para>
-            </returns>
-        </member>
-        <member name="M:CoreTweet.Rest.Media.UploadChunkedAsync(System.IO.Stream,CoreTweet.UploadMediaType,System.Object,System.Threading.CancellationToken)">
-            <summary>
-            <para>Uploads videos or chunked images to Twitter for use in a Tweet or Twitter-hosted Card as an asynchronous operation.</para>
-            <para>Available parameters:</para>
-            <para>- <c>IEnumerbale&lt;long&gt;</c> additional_owners (optional)</para>
-            </summary>
-            <param name="media">The raw binary file content being uploaded.</param>
-            <param name="mediaType">The type of the media being uploaded.</param>
-            <param name="parameters">The parameters.</param>
-            <param name="cancellationToken">The cancellation token.</param>
-            <returns>
-            <para>The task object representing the asynchronous operation.</para>
-            <para>The Result property on the task object returns the result for the uploaded media.</para>
-            </returns>
-        </member>
-        <member name="M:CoreTweet.Rest.Media.UploadChunkedAsync(System.IO.Stream,CoreTweet.UploadMediaType,System.Collections.Generic.IEnumerable{System.Int64},System.Threading.CancellationToken)">
-            <summary>
-            Uploads videos or chunked images to Twitter for use in a Tweet or Twitter-hosted Card as an asynchronous operation.
-            </summary>
-            <param name="media">The raw binary file content being uploaded.</param>
-            <param name="mediaType">The type of the media being uploaded.</param>
-            <param name="additional_owners">A comma-separated string of user IDs to set as additional owners who are allowed to use the returned media_id in Tweets or Cards.</param>
-            <param name="cancellationToken">The cancellation token.</param>
-            <returns>The result for the uploaded media.</returns>
-        </member>
-        <member name="M:CoreTweet.Rest.Media.Upload(System.Linq.Expressions.Expression{System.Func{System.String,System.Object}}[])">
-            <summary>
-            Upload media (images) to Twitter for use in a Tweet or Twitter-hosted Card.
-            <para>Available parameters:</para>
-            <para>- <c>Stream</c> / <c>IEnumerable&lt;byte&gt;</c> / <c>FileInfo</c> media (required)</para>
-            <para>- <c>string</c> media_data (required)</para>
-            <para>- <c>IEnumerbale&lt;long&gt;</c> additional_owners (optional)</para>
-            </summary>
-            <param name="parameters">The parameters.</param>
-            <returns>The result for the uploaded media.</returns>
-        </member>
-        <member name="M:CoreTweet.Rest.Media.Upload(System.Collections.Generic.IDictionary{System.String,System.Object})">
-            <summary>
-            Upload media (images) to Twitter for use in a Tweet or Twitter-hosted Card.
-            <para>Available parameters:</para>
-            <para>- <c>Stream</c> / <c>IEnumerable&lt;byte&gt;</c> / <c>FileInfo</c> media (required)</para>
-            <para>- <c>string</c> media_data (required)</para>
-            <para>- <c>IEnumerbale&lt;long&gt;</c> additional_owners (optional)</para>
-            </summary>
-            <param name="parameters">The parameters.</param>
-            <returns>The result for the uploaded media.</returns>
-        </member>
-        <member name="M:CoreTweet.Rest.Media.Upload(System.Object)">
-            <summary>
-            <para>Uploads an image and gets the media_id attached with a status.</para>
-            <para>Available parameters:</para>
-            <para>- <c>Stream</c> / <c>IEnumerable&lt;byte&gt;</c> / <c>FileInfo</c> media (required)</para>
-            <para>- <c>string</c> media_data (required)</para>
-            <para>- <c>IEnumerbale&lt;long&gt;</c> additional_owners (optional)</para>
-            </summary>
-            <param name="parameters">The parameters.</param>
-            <returns>The result for the uploaded media.</returns>
-        </member>
-        <member name="M:CoreTweet.Rest.Media.Upload(System.IO.Stream,System.Collections.Generic.IEnumerable{System.Int64})">
-            <summary>
-            Upload media (images) to Twitter for use in a Tweet or Twitter-hosted Card.
-            </summary>
-            <param name="media">The raw binary file content being uploaded.</param>
-            <param name="additional_owners">A comma-separated string of user IDs to set as additional owners who are allowed to use the returned media_id in Tweets or Cards.</param>
-            <returns>The result for the uploaded media.</returns>
-        </member>
-        <member name="M:CoreTweet.Rest.Media.Upload(System.Collections.Generic.IEnumerable{System.Byte},System.Collections.Generic.IEnumerable{System.Int64})">
-            <summary>
-            Upload media (images) to Twitter for use in a Tweet or Twitter-hosted Card.
-            </summary>
-            <param name="media">The raw binary file content being uploaded.</param>
-            <param name="additional_owners">A comma-separated string of user IDs to set as additional owners who are allowed to use the returned media_id in Tweets or Cards.</param>
-            <returns>The result for the uploaded media.</returns>
-        </member>
-        <member name="M:CoreTweet.Rest.Media.Upload(System.IO.FileInfo,System.Collections.Generic.IEnumerable{System.Int64})">
-            <summary>
-            Upload media (images) to Twitter for use in a Tweet or Twitter-hosted Card.
-            </summary>
-            <param name="media">The raw binary file content being uploaded.</param>
-            <param name="additional_owners">A comma-separated string of user IDs to set as additional owners who are allowed to use the returned media_id in Tweets or Cards.</param>
-            <returns>The result for the uploaded media.</returns>
-        </member>
-        <member name="M:CoreTweet.Rest.Media.Upload(System.String,System.Collections.Generic.IEnumerable{System.Int64})">
-            <summary>
-            Upload media (images) to Twitter for use in a Tweet or Twitter-hosted Card.
-            </summary>
-            <param name="media_data">The base64-encoded file content being uploaded.</param>
-            <param name="additional_owners">A comma-separated string of user IDs to set as additional owners who are allowed to use the returned media_id in Tweets or Cards.</param>
-            <returns>The result for the uploaded media.</returns>
-        </member>
-        <member name="M:CoreTweet.Rest.Media.UploadChunked(System.IO.Stream,System.Int32,CoreTweet.UploadMediaType,System.Linq.Expressions.Expression{System.Func{System.String,System.Object}}[])">
-            <summary>
-            <para>Uploads videos or chunked images to Twitter for use in a Tweet or Twitter-hosted Card.</para>
-            <para>Available parameters:</para>
-            <para>- <c>IEnumerbale&lt;long&gt;</c> additional_owners (optional)</para>
-            </summary>
-            <param name="media">The raw binary file content being uploaded.</param>
-            <param name="totalBytes">The size of the media being uploaded in bytes.</param>
-            <param name="mediaType">The type of the media being uploaded.</param>
-            <param name="parameters">The parameters.</param>
-            <returns>The result for the uploaded media.</returns>
-        </member>
-        <member name="M:CoreTweet.Rest.Media.UploadChunked(System.IO.Stream,System.Int32,CoreTweet.UploadMediaType,System.Collections.Generic.IDictionary{System.String,System.Object})">
-            <summary>
-            <para>Uploads videos or chunked images to Twitter for use in a Tweet or Twitter-hosted Card.</para>
-            <para>Available parameters:</para>
-            <para>- <c>IEnumerbale&lt;long&gt;</c> additional_owners (optional)</para>
-            </summary>
-            <param name="media">The raw binary file content being uploaded.</param>
-            <param name="totalBytes">The size of the media being uploaded in bytes.</param>
-            <param name="mediaType">The type of the media being uploaded.</param>
-            <param name="parameters">The parameters.</param>
-            <returns>The result for the uploaded media.</returns>
-        </member>
-        <member name="M:CoreTweet.Rest.Media.UploadChunked(System.IO.Stream,System.Int32,CoreTweet.UploadMediaType,System.Object)">
-            <summary>
-            <para>Uploads videos or chunked images to Twitter for use in a Tweet or Twitter-hosted Card.</para>
-            <para>Available parameters:</para>
-            <para>- <c>IEnumerbale&lt;long&gt;</c> additional_owners (optional)</para>
-            </summary>
-            <param name="media">The raw binary file content being uploaded.</param>
-            <param name="totalBytes">The size of the media being uploaded in bytes.</param>
-            <param name="mediaType">The type of the media being uploaded.</param>
-            <param name="parameters">The parameters.</param>
-            <returns>The result for the uploaded media.</returns>
-        </member>
-        <member name="M:CoreTweet.Rest.Media.UploadChunked(System.IO.Stream,System.Int32,CoreTweet.UploadMediaType,System.Collections.Generic.IEnumerable{System.Int64})">
-            <summary>
-            Uploads videos or chunked images to Twitter for use in a Tweet or Twitter-hosted Card.
-            </summary>
-            <param name="media">The raw binary file content being uploaded.</param>
-            <param name="totalBytes">The size of the media being uploaded in bytes.</param>
-            <param name="mediaType">The type of the media being uploaded.</param>
-            <param name="additional_owners">A comma-separated string of user IDs to set as additional owners who are allowed to use the returned media_id in Tweets or Cards.</param>
-            <returns>The result for the uploaded media.</returns>
-        </member>
-        <member name="M:CoreTweet.Rest.Media.UploadChunked(System.IO.Stream,CoreTweet.UploadMediaType,System.Linq.Expressions.Expression{System.Func{System.String,System.Object}}[])">
-            <summary>
-            <para>Uploads videos or chunked images to Twitter for use in a Tweet or Twitter-hosted Card.</para>
-            <para>Available parameters:</para>
-            <para>- <c>IEnumerbale&lt;long&gt;</c> additional_owners (optional)</para>
-            </summary>
-            <param name="media">The raw binary file content being uploaded.</param>
-            <param name="mediaType">The type of the media being uploaded.</param>
-            <param name="parameters">The parameters.</param>
-            <returns>The result for the uploaded media.</returns>
-        </member>
-        <member name="M:CoreTweet.Rest.Media.UploadChunked(System.IO.Stream,CoreTweet.UploadMediaType,System.Collections.Generic.IDictionary{System.String,System.Object})">
-            <summary>
-            <para>Uploads videos or chunked images to Twitter for use in a Tweet or Twitter-hosted Card.</para>
-            <para>Available parameters:</para>
-            <para>- <c>IEnumerbale&lt;long&gt;</c> additional_owners (optional)</para>
-            </summary>
-            <param name="media">The raw binary file content being uploaded.</param>
-            <param name="mediaType">The type of the media being uploaded.</param>
-            <param name="parameters">The parameters.</param>
-            <returns>The result for the uploaded media.</returns>
-        </member>
-        <member name="M:CoreTweet.Rest.Media.UploadChunked(System.IO.Stream,CoreTweet.UploadMediaType,System.Object)">
-            <summary>
-            <para>Uploads videos or chunked images to Twitter for use in a Tweet or Twitter-hosted Card.</para>
-            <para>Available parameters:</para>
-            <para>- <c>IEnumerbale&lt;long&gt;</c> additional_owners (optional)</para>
-            </summary>
-            <param name="media">The raw binary file content being uploaded.</param>
-            <param name="mediaType">The type of the media being uploaded.</param>
-            <param name="parameters">The parameters.</param>
-            <returns>The result for the uploaded media.</returns>
-        </member>
-        <member name="M:CoreTweet.Rest.Media.UploadChunked(System.IO.Stream,CoreTweet.UploadMediaType,System.Collections.Generic.IEnumerable{System.Int64})">
-            <summary>
-            Uploads videos or chunked images to Twitter for use in a Tweet or Twitter-hosted Card.
-            </summary>
-            <param name="media">The raw binary file content being uploaded.</param>
-            <param name="mediaType">The type of the media being uploaded.</param>
-            <param name="additional_owners">A comma-separated string of user IDs to set as additional owners who are allowed to use the returned media_id in Tweets or Cards.</param>
-            <returns>The result for the uploaded media.</returns>
-        </member>
         <member name="T:CoreTweet.Rest.Mutes">
             <summary>
             Provides a set of methods for the wrapper of GET/POST mutes.
@@ -17852,6 +18355,251 @@
             <returns>The stream messages.</returns>
         </member>
         <member name="M:CoreTweet.Streaming.StreamingApi.Firehose(System.Nullable{System.Int32},System.Nullable{System.Boolean})">
+            <summary>
+            Returns all public statuses. Few applications require this level of access.
+            <para>Creative use of a combination of other resources and various access levels can satisfy nearly every application use case.</para>
+            </summary>
+            <param name="count">The number of messages to backfill.</param>
+            <param name="stall_warnings">Specifies whether stall warnings should be delivered.</param>
+            <returns>The stream messages.</returns>
+        </member>
+        <member name="M:CoreTweet.Streaming.StreamingApi.UserAsObservable(System.Linq.Expressions.Expression{System.Func{System.String,System.Object}}[])">
+            <summary>
+            Streams messages for a single user.
+            <para>Available parameters:</para>
+            <para>- <c>string</c> delimited (optional, not affects CoreTweet)</para>
+            <para>- <c>bool</c> stall_warnings (optional)</para>
+            <para>- <c>string</c> with (optional)</para>
+            <para>- <c>string</c> replies (optional)</para>
+            <para>- <c>string</c> track (optional)</para>
+            <para>- <c>IEnumerable&lt;double&gt;</c> locations (optional)</para>
+            </summary>
+            <param name="parameters">The parameters.</param>
+            <returns>The stream messages.</returns>
+        </member>
+        <member name="M:CoreTweet.Streaming.StreamingApi.UserAsObservable(System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Streams messages for a single user.
+            <para>Available parameters:</para>
+            <para>- <c>string</c> delimited (optional, not affects CoreTweet)</para>
+            <para>- <c>bool</c> stall_warnings (optional)</para>
+            <para>- <c>string</c> with (optional)</para>
+            <para>- <c>string</c> replies (optional)</para>
+            <para>- <c>string</c> track (optional)</para>
+            <para>- <c>IEnumerable&lt;double&gt;</c> locations (optional)</para>
+            </summary>
+            <param name="parameters">The parameters.</param>
+            <returns>The stream messages.</returns>
+        </member>
+        <member name="M:CoreTweet.Streaming.StreamingApi.UserAsObservable(System.Object)">
+            <summary>
+            Streams messages for a single user.
+            <para>Available parameters:</para>
+            <para>- <c>string</c> delimited (optional, not affects CoreTweet)</para>
+            <para>- <c>bool</c> stall_warnings (optional)</para>
+            <para>- <c>string</c> with (optional)</para>
+            <para>- <c>string</c> replies (optional)</para>
+            <para>- <c>string</c> track (optional)</para>
+            <para>- <c>IEnumerable&lt;double&gt;</c> locations (optional)</para>
+            </summary>
+            <param name="parameters">The parameters.</param>
+            <returns>The stream messages.</returns>
+        </member>
+        <member name="M:CoreTweet.Streaming.StreamingApi.UserAsObservable(System.Nullable{System.Boolean},System.String,System.String,System.String,System.Collections.Generic.IEnumerable{System.Double})">
+            <summary>
+            Streams messages for a single user.
+            </summary>
+            <param name="stall_warnings">Specifies whether stall warnings should be delivered.</param>
+            <param name="with">Specifies whether to return information for just the authenticating user, or include messages from accounts the user follows.</param>
+            <param name="replies">Specifies whether to return additional &#64;replies.</param>
+            <param name="track">Includes additional Tweets matching the specified keywords. Phrases of keywords are specified by a comma-separated list.</param>
+            <param name="locations">Includes additional Tweets falling within the specified bounding boxes.</param>
+            <returns>The stream messages.</returns>
+        </member>
+        <member name="M:CoreTweet.Streaming.StreamingApi.SiteAsObservable(System.Linq.Expressions.Expression{System.Func{System.String,System.Object}}[])">
+            <summary>
+            Streams messages for a set of users.
+            <para>Available parameters:</para>
+            <para>- <c>IEnumerable&lt;long&gt;</c> follow (required)</para>
+            <para>- <c>string</c> delimited (optional, not affects CoreTweet)</para>
+            <para>- <c>bool</c> stall_warnings (optional)</para>
+            <para>- <c>string</c> with (optional)</para>
+            <para>- <c>string</c> replies (optional)</para>
+            </summary>
+            <param name="parameters">The parameters.</param>
+            <returns>The stream messages.</returns>
+        </member>
+        <member name="M:CoreTweet.Streaming.StreamingApi.SiteAsObservable(System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Streams messages for a set of users.
+            <para>Available parameters:</para>
+            <para>- <c>IEnumerable&lt;long&gt;</c> follow (required)</para>
+            <para>- <c>string</c> delimited (optional, not affects CoreTweet)</para>
+            <para>- <c>bool</c> stall_warnings (optional)</para>
+            <para>- <c>string</c> with (optional)</para>
+            <para>- <c>string</c> replies (optional)</para>
+            </summary>
+            <param name="parameters">The parameters.</param>
+            <returns>The stream messages.</returns>
+        </member>
+        <member name="M:CoreTweet.Streaming.StreamingApi.SiteAsObservable(System.Object)">
+            <summary>
+            Streams messages for a set of users.
+            <para>Available parameters:</para>
+            <para>- <c>IEnumerable&lt;long&gt;</c> follow (required)</para>
+            <para>- <c>string</c> delimited (optional, not affects CoreTweet)</para>
+            <para>- <c>bool</c> stall_warnings (optional)</para>
+            <para>- <c>string</c> with (optional)</para>
+            <para>- <c>string</c> replies (optional)</para>
+            </summary>
+            <param name="parameters">The parameters.</param>
+            <returns>The stream messages.</returns>
+        </member>
+        <member name="M:CoreTweet.Streaming.StreamingApi.SiteAsObservable(System.Collections.Generic.IEnumerable{System.Int64},System.Nullable{System.Boolean},System.String,System.String)">
+            <summary>
+            Streams messages for a set of users.
+            </summary>
+            <param name="follow">A comma separated list of user IDs, indicating the users to return statuses for in the stream.</param>
+            <param name="stall_warnings">Specifies whether stall warnings should be delivered.</param>
+            <param name="with">Specifies whether to return information for just the users specified in the follow parameter, or include messages from accounts they follow.</param>
+            <param name="replies">Specifies whether to return additional &#64;replies.</param>
+            <returns>The stream messages.</returns>
+        </member>
+        <member name="M:CoreTweet.Streaming.StreamingApi.FilterAsObservable(System.Linq.Expressions.Expression{System.Func{System.String,System.Object}}[])">
+            <summary>
+            Returns public statuses that match one or more filter predicates.
+            <para>Multiple parameters may be specified which allows most clients to use a single connection to the Streaming API.</para>
+            <para>Note: At least one predicate parameter (follow, locations, or track) must be specified.</para>
+            <para>Available parameters:</para>
+            <para>- <c>IEnumerable&lt;long&gt;</c> follow (optional)</para>
+            <para>- <c>string</c> track (optional)</para>
+            <para>- <c>IEnumerable&lt;double&gt;</c> locations (optional)</para>
+            <para>- <c>string</c> delimited (optional, not affects CoreTweet)</para>
+            <para>- <c>bool</c> stall_warnings (optional)</para>
+            </summary>
+            <param name="parameters">The parameters.</param>
+            <returns>The stream messages.</returns>
+        </member>
+        <member name="M:CoreTweet.Streaming.StreamingApi.FilterAsObservable(System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Returns public statuses that match one or more filter predicates.
+            <para>Multiple parameters may be specified which allows most clients to use a single connection to the Streaming API.</para>
+            <para>Note: At least one predicate parameter (follow, locations, or track) must be specified.</para>
+            <para>Available parameters:</para>
+            <para>- <c>IEnumerable&lt;long&gt;</c> follow (optional)</para>
+            <para>- <c>string</c> track (optional)</para>
+            <para>- <c>IEnumerable&lt;double&gt;</c> locations (optional)</para>
+            <para>- <c>string</c> delimited (optional, not affects CoreTweet)</para>
+            <para>- <c>bool</c> stall_warnings (optional)</para>
+            </summary>
+            <param name="parameters">The parameters.</param>
+            <returns>The stream messages.</returns>
+        </member>
+        <member name="M:CoreTweet.Streaming.StreamingApi.FilterAsObservable(System.Object)">
+            <summary>
+            Returns public statuses that match one or more filter predicates.
+            <para>Multiple parameters may be specified which allows most clients to use a single connection to the Streaming API.</para>
+            <para>Note: At least one predicate parameter (follow, locations, or track) must be specified.</para>
+            <para>Available parameters:</para>
+            <para>- <c>IEnumerable&lt;long&gt;</c> follow (optional)</para>
+            <para>- <c>string</c> track (optional)</para>
+            <para>- <c>IEnumerable&lt;double&gt;</c> locations (optional)</para>
+            <para>- <c>string</c> delimited (optional, not affects CoreTweet)</para>
+            <para>- <c>bool</c> stall_warnings (optional)</para>
+            </summary>
+            <param name="parameters">The parameters.</param>
+            <returns>The stream messages.</returns>
+        </member>
+        <member name="M:CoreTweet.Streaming.StreamingApi.FilterAsObservable(System.Collections.Generic.IEnumerable{System.Int64},System.String,System.Collections.Generic.IEnumerable{System.Double},System.Nullable{System.Boolean})">
+            <summary>
+            Returns public statuses that match one or more filter predicates.
+            <para>Multiple parameters may be specified which allows most clients to use a single connection to the Streaming API.</para>
+            <para>Note: At least one predicate parameter (follow, locations, or track) must be specified.</para>
+            </summary>
+            <param name="follow">A comma separated list of user IDs, indicating the users to return statuses for in the stream.</param>
+            <param name="track">Keywords to track. Phrases of keywords are specified by a comma-separated list.</param>
+            <param name="locations">Specifies a set of bounding boxes to track.</param>
+            <param name="stall_warnings">Specifies whether stall warnings should be delivered.</param>
+            <returns>The stream messages.</returns>
+        </member>
+        <member name="M:CoreTweet.Streaming.StreamingApi.SampleAsObservable(System.Linq.Expressions.Expression{System.Func{System.String,System.Object}}[])">
+            <summary>
+            Returns a small random sample of all public statuses.
+            <para>The Tweets returned by the default access level are the same, so if two different clients connect to this endpoint, they will see the same Tweets.</para>
+            <para>Available parameters:</para>
+            <para>- <c>string</c> delimited (optional, not affects CoreTweet)</para>
+            <para>- <c>bool</c> stall_warnings (optional)</para>
+            </summary>
+            <param name="parameters">The parameters.</param>
+            <returns>The stream messages.</returns>
+        </member>
+        <member name="M:CoreTweet.Streaming.StreamingApi.SampleAsObservable(System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Returns a small random sample of all public statuses.
+            <para>The Tweets returned by the default access level are the same, so if two different clients connect to this endpoint, they will see the same Tweets.</para>
+            <para>Available parameters:</para>
+            <para>- <c>string</c> delimited (optional, not affects CoreTweet)</para>
+            <para>- <c>bool</c> stall_warnings (optional)</para>
+            </summary>
+            <param name="parameters">The parameters.</param>
+            <returns>The stream messages.</returns>
+        </member>
+        <member name="M:CoreTweet.Streaming.StreamingApi.SampleAsObservable(System.Object)">
+            <summary>
+            Returns a small random sample of all public statuses.
+            <para>The Tweets returned by the default access level are the same, so if two different clients connect to this endpoint, they will see the same Tweets.</para>
+            <para>Available parameters:</para>
+            <para>- <c>string</c> delimited (optional, not affects CoreTweet)</para>
+            <para>- <c>bool</c> stall_warnings (optional)</para>
+            </summary>
+            <param name="parameters">The parameters.</param>
+            <returns>The stream messages.</returns>
+        </member>
+        <member name="M:CoreTweet.Streaming.StreamingApi.SampleAsObservable(System.Nullable{System.Boolean})">
+            <summary>
+            Returns a small random sample of all public statuses.
+            <para>The Tweets returned by the default access level are the same, so if two different clients connect to this endpoint, they will see the same Tweets.</para>
+            </summary>
+            <param name="stall_warnings">Specifies whether stall warnings should be delivered.</param>
+            <returns>The stream messages.</returns>
+        </member>
+        <member name="M:CoreTweet.Streaming.StreamingApi.FirehoseAsObservable(System.Linq.Expressions.Expression{System.Func{System.String,System.Object}}[])">
+            <summary>
+            Returns all public statuses. Few applications require this level of access.
+            <para>Creative use of a combination of other resources and various access levels can satisfy nearly every application use case.</para>
+            <para>Available parameters:</para>
+            <para>- <c>int</c> count (optional)</para>
+            <para>- <c>string</c> delimited (optional, not affects CoreTweet)</para>
+            <para>- <c>bool</c> stall_warnings (optional)</para>
+            </summary>
+            <param name="parameters">The parameters.</param>
+            <returns>The stream messages.</returns>
+        </member>
+        <member name="M:CoreTweet.Streaming.StreamingApi.FirehoseAsObservable(System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Returns all public statuses. Few applications require this level of access.
+            <para>Creative use of a combination of other resources and various access levels can satisfy nearly every application use case.</para>
+            <para>Available parameters:</para>
+            <para>- <c>int</c> count (optional)</para>
+            <para>- <c>string</c> delimited (optional, not affects CoreTweet)</para>
+            <para>- <c>bool</c> stall_warnings (optional)</para>
+            </summary>
+            <param name="parameters">The parameters.</param>
+            <returns>The stream messages.</returns>
+        </member>
+        <member name="M:CoreTweet.Streaming.StreamingApi.FirehoseAsObservable(System.Object)">
+            <summary>
+            Returns all public statuses. Few applications require this level of access.
+            <para>Creative use of a combination of other resources and various access levels can satisfy nearly every application use case.</para>
+            <para>Available parameters:</para>
+            <para>- <c>int</c> count (optional)</para>
+            <para>- <c>string</c> delimited (optional, not affects CoreTweet)</para>
+            <para>- <c>bool</c> stall_warnings (optional)</para>
+            </summary>
+            <param name="parameters">The parameters.</param>
+            <returns>The stream messages.</returns>
+        </member>
+        <member name="M:CoreTweet.Streaming.StreamingApi.FirehoseAsObservable(System.Nullable{System.Int32},System.Nullable{System.Boolean})">
             <summary>
             Returns all public statuses. Few applications require this level of access.
             <para>Creative use of a combination of other resources and various access levels can satisfy nearly every application use case.</para>

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:nex"
         mc:Ignorable="d"
-        Title="nex" Height="350" Width="350" Background="#FF212121" Foreground="WhiteSmoke" Loaded="Window_Loaded" WindowStyle="None">
+        Title="nex" Height="350" Width="350" Background="#FF212121" Foreground="WhiteSmoke" Loaded="Window_Loaded" WindowStyle="None" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="0"
                       ResizeBorderThickness="{x:Static SystemParameters.WindowResizeBorderThickness}" />
@@ -19,10 +19,10 @@
                 <Button x:Name="ExitButton" Content="r" FontFamily="Marlett" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="WhiteSmoke" Click="ExitButton_Click" Width="20" Height="20"  />
             </StackPanel>
             <ProgressBar Height="4" VerticalAlignment="Bottom" Background="{x:Null}" BorderBrush="{x:Null}" IsIndeterminate="True" Foreground="#FF03A9F4"/>
-            <Label x:Name="label" Content="Chacking Updates..." Margin="113,0,113,9" VerticalAlignment="Bottom" Foreground="WhiteSmoke" Background="{x:Null}" FontSize="10.667"/>
-            <Label x:Name="buildNumber" Content="Alpha Build" Margin="132,0,132,38" VerticalAlignment="Bottom" Foreground="WhiteSmoke"/>
+            <TextBlock x:Name="status" Text="status" Margin="113,0,113,9" VerticalAlignment="Bottom" Foreground="WhiteSmoke" Background="{x:Null}" FontSize="10.667" HorizontalAlignment="Center"/>
+            <TextBlock x:Name="buildNumber" Text="Alpha Build" Margin="132,0,132,38" VerticalAlignment="Bottom" Foreground="WhiteSmoke" HorizontalAlignment="Center"/>
             <Image x:Name="image" Margin="120,90,120,150" Source="img/nex.png" HorizontalAlignment="Center" VerticalAlignment="Center" Height="100" Width="100"/>
-            <Label x:Name="label1" Content="nex NEON" Margin="135,0,135,120" Foreground="WhiteSmoke" Height="25" VerticalAlignment="Bottom"/>
+            <TextBlock x:Name="softname" Margin="140,0,140,129" Foreground="WhiteSmoke" VerticalAlignment="Bottom" HorizontalAlignment="Center" Text="nex"/>
         </Grid>
     </Border>
 </Window>
