@@ -1,5 +1,6 @@
-# <a href="#"><img alt="nex NEON logo" src="https://raw.githubusercontent.com/frainworks/nex/snowhite-Branch/nex/img/nex.png" width="40"/></a> nex
-<img src="https://img.shields.io/badge/nex-NEON-red.svg">  
+# <a href=""><img alt="nex NEON logo" src="https://raw.githubusercontent.com/frainworks/nex/snowhite-Branch/nex/img/nex.png" width="30"/></a> nex
+<a href="https://github.com/frainworks/nex/wiki"><img src="https://img.shields.io/badge/nex-NEON-red.svg"></a>
+<a href="https://github.com/frainworks/nex/wiki/License"><img src="https://img.shields.io/badge/License-MIT-blue.svg">  
 
 [![Stories in Backlog](https://badge.waffle.io/frainworks/nex.svg?label=backlog&title=Backlog)](http://waffle.io/frainworks/nex)
 [![Stories in progress](https://badge.waffle.io/frainworks/nex.svg?label=progress&title=Progress)](http://waffle.io/frainworks/nex)
