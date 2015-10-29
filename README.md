@@ -1,4 +1,4 @@
-# <a href=""><img alt="nex NEON logo" src="https://raw.githubusercontent.com/frainworks/nex/snowhite-Branch/nex/img/nex.png" width="30"/></a> nex
+# <a href="#"><img alt="nex NEON logo" src="https://raw.githubusercontent.com/frainworks/nex/snowhite-Branch/nex/img/nex.png" width="30"/></a> nex
 <a href="https://github.com/frainworks/nex/wiki"><img src="https://img.shields.io/badge/nex-NEON-red.svg"></a>
 <a href="https://github.com/frainworks/nex/wiki/License"><img src="https://img.shields.io/badge/License-MIT-blue.svg">  
 
