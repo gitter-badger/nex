@@ -1,2 +1,17 @@
 language: csharp
 solution: nex.sln
+env:
+  global:
+   # The next declaration is the encrypted COVERITY_SCAN_TOKEN, created
+   #   via the "travis encrypt" command using the project repo's public key
+   - secure: "DdcAZxN+EhC+MJ7TswNgFt5UTxx2yqLr6pwcwWIplE06N9hfTSfYbjvwIgvIehthaoLg3CoS3geg59MlhbjpdvZyafNuJM1S7Qj7DfZHmiNLiBK+y6x4Z6imby2enjl7ziKo+LpPhiRTENA1LLSpH5ddyR+8mfTDF95bD58kURXdmAyt3FzE2mhOM/rKJEY45yIT64zrAza/5Dpe3awABJ1c/t21mvEuzaydEjwQQ9TlTcfoYBFpXD6GKDjoWvBK0vokRxzqlr8WYMNH/jOelLwrOnhJDLLHGE8o6LNsPhL/zEAhfB0rAi0ifRVt1hm84FeYDs2ml/7On0VzTDuBn3IMp65W8dgLXQg0Q98H1hW0Dp7d+1KkPQgZw6di8/+QhkKGr5JRVpAenTZkt9PTzojHrCDwmOvSxNDrTdBxV4lS0ZufGifgKLa59ixI/+5vB9Rul0hGcj7/ISudy9ifgBy2kaAPqZH/q3zXotqYuQj71/3ezGJaGgFD77BrzwVU41EyzeytnF8RLymuoT2DNUf2CnQGxNHIpIPyvccT0z0ZEhZt+DAJ5+UWayxBmyLkGJ35OXmJNQVXzAopRvVmKqWvl41AsH66Ik9qdsJBVaEWEC6qnO/Xep2qrVYiCcB+gGSUI8L7lvebCBda665QKVBlREfAfzHUNBe52taeo90="
+
+addons:
+  coverity_scan:
+    project:
+      name: "frainworks/nex"
+      description: "Build submitted via Travis CI"
+    notification_email: snowhite0804@gmail.com
+    build_command_prepend: "msbuild /t:Clean"
+    build_command:   "msbuild /t:Rebuild"
+    branch_pattern: coverity_scan

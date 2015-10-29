@@ -17,3 +17,6 @@ C:\Users\snow\Documents\GitHub\nex\For Developer\nex\nex\obj\Debug\nex.Propertie
 C:\Users\snow\Documents\GitHub\nex\For Developer\nex\nex\obj\Debug\nex.csproj.GenerateResource.Cache
 C:\Users\snow\Documents\GitHub\nex\For Developer\nex\nex\obj\Debug\nex.exe
 C:\Users\snow\Documents\GitHub\nex\For Developer\nex\nex\obj\Debug\nex.pdb
+C:\Users\snow\Documents\GitHub\nex\nex\bin\Debug\nex.exe.config
+C:\Users\snow\Documents\GitHub\nex\nex\obj\Debug\nex.exe
+C:\Users\snow\Documents\GitHub\nex\nex\obj\Debug\nex.pdb
