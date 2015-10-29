@@ -2,9 +2,10 @@
 <img src="https://img.shields.io/badge/nex-NEON-red.svg">  
 
 [![Stories in Backlog](https://badge.waffle.io/frainworks/nex.svg?label=backlog&title=Backlog)](http://waffle.io/frainworks/nex)
-[![Stories in progress](https://badge.waffle.io/frainworks/nex.svg?label=in%20progress&title=In%20Progress)](http://waffle.io/frainworks/nex)
+[![Stories in progress](https://badge.waffle.io/frainworks/nex.svg?label=progress&title=Progress)](http://waffle.io/frainworks/nex)
+[![Stories in Bug](https://badge.waffle.io/frainworks/nex.svg?label=Bug&title=Bug)](http://waffle.io/frainworks/nex)
 [![Stories in Ready](https://badge.waffle.io/frainworks/nex.svg?label=ready&title=Ready)](http://waffle.io/frainworks/nex)
-[![Stories in Done](https://badge.waffle.io/frainworks/nex.svg?label=done&title=Done)](http://waffle.io/frainworks/nex)  
+[![Stories in Done](https://badge.waffle.io/frainworks/nex.svg?label=done&title=done)](http://waffle.io/frainworks/nex)  
 
 [![Issue Stats](http://www.issuestats.com/github/frainworks/nex/badge/pr?style=flat)](http://www.issuestats.com/github/frainworks/nex)
 [![Issue Stats](http://www.issuestats.com/github/frainworks/nex/badge/issue?style=flat)](http://www.issuestats.com/github/frainworks/nex)  
