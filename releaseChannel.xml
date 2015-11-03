@@ -1,5 +1,23 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<!-- Type1  利点 プログラムで分解しやすい? どんどん書いていける-->
+<?xml version="1.0"?>
+<Updates>
+	<Release version="0.0.0.2" date="yyyy/mm/dd" description="hogehoge" canskip="false">
+		<download url="https://github.com/.zip" />
+	</Release>
+		<PreRelease version="0.0.0.2" date="yyyy/mm/dd" description="hogehoge" canskip="true">
+		<download url="https//github.com/.zip" />
+	</PreRelease>
+	<Release version="0.0.0.1" date="yyyy/mm/dd" description="hogehoge">
+		<download url="https://github.com/.zip" />
+	</Release>
+</Updates>
+
+<!-- Type2 利点 一つで間違えにくい -->
+<?xml version="1.0"?>
+<Updates>
 	<Channel>release</Channel>
 	<Ver>0.0.0.1</Ver>
 	<releaseDate>yyyy/mm/dd</releaseDate>
 	<description>hogehoge</description>
+	<canskip>true</canskip>
+</Updates>
