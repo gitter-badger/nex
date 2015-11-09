@@ -89,7 +89,10 @@ namespace nex
             getCookie();
 
             status.Text = "All done. wakeing up nex";
-        }
+
+			MainWindow main = new MainWindow();
+			main.Show();
+		}
 
         public async void getCookie()
         {
