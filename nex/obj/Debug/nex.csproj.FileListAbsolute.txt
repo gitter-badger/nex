@@ -43,3 +43,6 @@ C:\Users\snow\Documents\GitHub\nex\nex\bin\Debug\SnkLib.App.CookieGetter.dll
 C:\Users\snow\Documents\GitHub\nex\nex\bin\Debug\System.Data.SQLite.dll
 C:\Users\snow\Documents\GitHub\nex\nex\bin\Debug\SnkLib.App.CookieGetter.xml
 C:\Users\snow\Documents\GitHub\nex\nex\bin\Debug\System.Data.SQLite.xml
+C:\Users\Csoft\Documents\GitHub\nex\nex\bin\Debug\nex.exe.config
+C:\Users\Csoft\Documents\GitHub\nex\nex\obj\Debug\nex.exe
+C:\Users\Csoft\Documents\GitHub\nex\nex\obj\Debug\nex.pdb
