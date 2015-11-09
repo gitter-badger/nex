@@ -24,10 +24,19 @@ namespace nex
         {
             InitializeComponent();
 
-            MouseLeftButtonDown += (sender, e) => DragMove();
-        }
+			Loaded += MainWindow_Loaded;
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
+			MouseLeftButtonDown += (sender, e) => DragMove();
+		}
+
+		public void MainWindow_Loaded(object sender, RoutedEventArgs e)
+		{
+			var app = Application.Current as App;
+			if (app == null || app.Splash == null) return;
+			app.Splash.Close();
+		}
+
+		private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             //
         }
