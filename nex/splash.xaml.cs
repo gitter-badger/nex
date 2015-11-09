@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Xml;
 using SunokoLibrary.Application;
 
 namespace nex
@@ -40,6 +41,7 @@ namespace nex
                 System.Reflection.Assembly.GetExecutingAssembly();
             //バージョンの取得
             Version ver = asm.GetName().Version;
+            string currentVer = ver.ToString();
 
             //ソフトタイトルの取得
             System.Reflection.AssemblyTitleAttribute asmttl =
@@ -52,14 +54,41 @@ namespace nex
 
             buildNumber.Text = "Build" + " " + ver;
 
-            status.Text = "Starting up...";
+            status.Text = "wakeing up...";
 
-            status.Text = "Checking updates from repository...";
-            //Update codes here.
+            status.Text = "Checking updates from stableChannel...";
+
+            //Update 確認処理 ↓
+            WebClient wc = new WebClient();
+
+            byte[] pagedata = wc.DownloadData("https://raw.githubusercontent.com/frainworks/nex/StableChannel/update.xml");
+
+            Encoding ec = Encoding.UTF8;
+
+            XmlDocument xdoc = new XmlDocument();
+
+            xdoc.LoadXml(ec.GetString(pagedata));
+
+            XmlElement root = xdoc.DocumentElement;
+
+            var channel = root.SelectSingleNode("channel").InnerText;
+            var latestVer = root.SelectSingleNode("ver").InnerText;
+            var releaseDate = root.SelectSingleNode("releaseDate").InnerText;
+            var description = root.SelectSingleNode("description").InnerText;
+
+            wc.Dispose();
+
+            Console.WriteLine("channel:" + channel);
+            Console.WriteLine("latestVer:" + latestVer);
+            Console.WriteLine("releaseDate:" + releaseDate);
+            Console.WriteLine("description:" + description);
+
+            //Update 確認処理　↑
 
             status.Text = "Getting cookie from Installed Browsers...";
             getCookie();
 
+            status.Text = "All done. wakeing up nex";
         }
 
         public async void getCookie()
@@ -70,11 +99,11 @@ namespace nex
             var targetUrl = new Uri("http://nicovideo.jp/");
             var result = await cookieGetter.GetCookiesAsync(targetUrl);
 
-            //通信に使う際にはCookieContainerへ取得結果を追加して使用します。
+            //CookieContainerへ取得結果を追加
             var cookies = new CookieContainer();
             cookies.Add(result.Cookies);
 
-            //次回起動時用の構成を保存します。
+            //次回起動時用の構成を保存
             Properties.Settings.Default.SelectedGetterInfo = cookieGetter.SourceInfo;
         }
     }

@@ -39,3 +39,7 @@ C:\Users\snow\Documents\GitHub\nex\nex\obj\Debug\splash.baml
 C:\Users\snow\Documents\GitHub\nex\nex\obj\Debug\nex.g.resources
 C:\Users\snow\Documents\GitHub\nex\nex\obj\Debug\nex.Properties.Resources.resources
 C:\Users\snow\Documents\GitHub\nex\nex\obj\Debug\nex.csproj.GenerateResource.Cache
+C:\Users\snow\Documents\GitHub\nex\nex\bin\Debug\SnkLib.App.CookieGetter.dll
+C:\Users\snow\Documents\GitHub\nex\nex\bin\Debug\System.Data.SQLite.dll
+C:\Users\snow\Documents\GitHub\nex\nex\bin\Debug\SnkLib.App.CookieGetter.xml
+C:\Users\snow\Documents\GitHub\nex\nex\bin\Debug\System.Data.SQLite.xml
