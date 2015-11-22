@@ -58,7 +58,7 @@ namespace nex
 
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            string appPath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+            string appPath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + @"\";
 
             // Assemblyを取得
             System.Reflection.Assembly asm =
@@ -89,8 +89,6 @@ namespace nex
             status.Text = "Checking updates from stableChannel...";
 
             // Update 確認処理 >>>
-            try
-            {
                 WebClient wc = new WebClient();
 
                 byte[] pagedata = wc.DownloadData("https://raw.githubusercontent.com/frainworks/nex/StableChannel/update.xml");
@@ -130,17 +128,17 @@ namespace nex
                     wc.DownloadFile("https://raw.githubusercontent.com/frainworks/nex/StableChannel/nex.zip", appPath + @"nex.zip");
                     wc.Dispose();
 
-                    ZipFile.ExtractToDirectory(appPath + @"nex.zip", appPath);
+                    ZipArchive archive = ZipFile.OpenRead(appPath + @"nex.zip");
+
+                    ZipArchiveEntry entry = archive.GetEntry("nex.exe");
+                    entry.ExtractToFile(entry.FullName, true);
+
+                    // ZipFile.ExtractToDirectory(appPath + @"nex.zip", appPath);
 
                     Process.Start(appPath + @"nex.exe", "/up " + Process.GetCurrentProcess().Id);
                     Close();
                 }
-            }
 
-            catch
-            {
-                status.Text = "update check failed";
-            }
 
             // <<< Update 確認処理
 

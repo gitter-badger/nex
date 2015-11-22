@@ -68,3 +68,4 @@ C:\Users\Csoft\Documents\GitHub\nex\nex\obj\Debug\splash.baml
 C:\Users\Csoft\Documents\GitHub\nex\nex\obj\Debug\nex.g.resources
 C:\Users\Csoft\Documents\GitHub\nex\nex\obj\Debug\nex.Properties.Resources.resources
 C:\Users\Csoft\Documents\GitHub\nex\nex\obj\Debug\nex.csproj.GenerateResource.Cache
+C:\Users\snow\Documents\GitHub\nex\nex\obj\Debug\nex.csprojResolveAssemblyReference.cache
