@@ -31,6 +31,7 @@ namespace nex
 
 			MouseLeftButtonDown += (sender, e) => DragMove();
 
+            /*
             if (Environment.CommandLine.IndexOf("/up", StringComparison.CurrentCultureIgnoreCase) != -1)
             {
                 try
@@ -46,7 +47,7 @@ namespace nex
 
                 File.Delete(@"nex.old");
             }
-
+            */
         }
 
         private void ExitButton_Click(object sender, RoutedEventArgs e)
@@ -88,7 +89,9 @@ namespace nex
 
             status.Text = "Checking updates from stableChannel...";
 
-            // Update 確認処理 >>>
+            try {
+
+                // Update 確認処理 >>>
                 WebClient wc = new WebClient();
 
                 byte[] pagedata = wc.DownloadData("https://raw.githubusercontent.com/frainworks/nex/StableChannel/update.xml");
@@ -116,28 +119,39 @@ namespace nex
                 if (latestVer == currentVer)
                 {
                     status.Text = "no updates found.";
+                    File.Delete(appPath + "nex.old");
+                    File.Delete(appPath + "nex.zip");
                 }
 
                 else
                 {
                     status.Text = "update found. starting update.";
 
-                    File.Delete(appPath + @"nex.old"); // delete old file
-                    File.Move(appPath + @"nex.exe", appPath + @"nex.old"); // change own name to .old
+                    File.Delete(appPath + "nex.old"); // delete old file
+                    File.Move(appPath + "nex.exe", appPath + "nex.old"); // change own name to .old
 
                     wc.DownloadFile("https://raw.githubusercontent.com/frainworks/nex/StableChannel/nex.zip", appPath + @"nex.zip");
                     wc.Dispose();
 
-                    ZipArchive archive = ZipFile.OpenRead(appPath + @"nex.zip");
+                    ZipArchive archive = ZipFile.OpenRead(appPath + "nex.zip");
 
                     ZipArchiveEntry entry = archive.GetEntry("nex.exe");
                     entry.ExtractToFile(entry.FullName, true);
 
                     // ZipFile.ExtractToDirectory(appPath + @"nex.zip", appPath);
 
-                    Process.Start(appPath + @"nex.exe", "/up " + Process.GetCurrentProcess().Id);
-                    Close();
+                    // Process.Start(appPath + "nex.exe", "/up " + Process.GetCurrentProcess().Id);
+
+                    MessageBox.Show("Updateに成功しました。\r\n再度起動して下さい。");
+
+                    Application.Current.Shutdown();
+
                 }
+            }
+            catch
+            {
+                status.Text = "Failed updates check from stableChannel.";
+            }
 
 
             // <<< Update 確認処理
