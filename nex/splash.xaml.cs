@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -21,93 +24,152 @@ namespace nex
 	/// splash.xaml の相互作用ロジック
 	/// </summary>
 	public partial class splash : Window
-	{
+    {
 		public splash()
 		{
 			InitializeComponent();
 
 			MouseLeftButtonDown += (sender, e) => DragMove();
-		}
 
-		private void ExitButton_Click(object sender, RoutedEventArgs e)
+            if (Environment.CommandLine.IndexOf("/up", StringComparison.CurrentCultureIgnoreCase) != -1)
+            {
+                try
+                {
+                    string[] args = Environment.GetCommandLineArgs();
+                    int pid = Convert.ToInt32(args[2]);
+                    Process.GetProcessById(pid).WaitForExit(); // 終了待ち
+                }
+                catch
+                {
+                    //
+                }
+
+                File.Delete(@"nex.old");
+            }
+
+        }
+
+        private void ExitButton_Click(object sender, RoutedEventArgs e)
 		{
-			Application.Current.Shutdown(); //終了する
+			Application.Current.Shutdown(); // 終了する
 		}
 
-		private void Window_Loaded(object sender, RoutedEventArgs e)
-		{
-			//Assemblyを取得
-			System.Reflection.Assembly asm =
-				System.Reflection.Assembly.GetExecutingAssembly();
-			//バージョンの取得
-			Version ver = asm.GetName().Version;
-			string currentVer = ver.ToString();
+        public MainWindow main = new MainWindow();
 
-			//ソフトタイトルの取得
-			System.Reflection.AssemblyTitleAttribute asmttl =
-				(System.Reflection.AssemblyTitleAttribute)
-				Attribute.GetCustomAttribute(
-					System.Reflection.Assembly.GetExecutingAssembly(),
-					typeof(System.Reflection.AssemblyTitleAttribute));
+        private async void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            string appPath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
 
-			softname.Text = asmttl.Title;
+            // Assemblyを取得
+            System.Reflection.Assembly asm =
+                System.Reflection.Assembly.GetExecutingAssembly();
+            // バージョンの取得
+            Version ver = asm.GetName().Version;
+            string currentVer = ver.ToString();
 
-			buildNumber.Text = "Build" + " " + ver;
+            // ソフトタイトルの取得
+            System.Reflection.AssemblyTitleAttribute asmttl =
+                (System.Reflection.AssemblyTitleAttribute)
+                Attribute.GetCustomAttribute(
+                    System.Reflection.Assembly.GetExecutingAssembly(),
+                    typeof(System.Reflection.AssemblyTitleAttribute));
 
-			status.Text = "wakeing up...";
+            softname.Text = asmttl.Title;
 
-			status.Text = "Checking updates from stableChannel...";
+            buildNumber.Text = "Build" + " " + ver;
 
-			//Update 確認処理 ↓
-			WebClient wc = new WebClient();
+            status.Text = "wakeing up...";
 
-			byte[] pagedata = wc.DownloadData("https://raw.githubusercontent.com/frainworks/nex/StableChannel/update.xml");
+            // Internetに接続されているか調べる
+            if (!System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable())
+            {
+                MessageBox.Show("インターネットに接続されていません。\r\nインターネットに接続後、再度起動してください。");
+            }
 
-			Encoding ec = Encoding.UTF8;
+            status.Text = "Checking updates from stableChannel...";
 
-			XmlDocument xdoc = new XmlDocument();
+            // Update 確認処理 >>>
+            try
+            {
+                WebClient wc = new WebClient();
 
-			xdoc.LoadXml(ec.GetString(pagedata));
+                byte[] pagedata = wc.DownloadData("https://raw.githubusercontent.com/frainworks/nex/StableChannel/update.xml");
 
-			XmlElement root = xdoc.DocumentElement;
+                Encoding ec = Encoding.UTF8;
 
-			var channel = root.SelectSingleNode("channel").InnerText;
-			var latestVer = root.SelectSingleNode("ver").InnerText;
-			var releaseDate = root.SelectSingleNode("releaseDate").InnerText;
-			var description = root.SelectSingleNode("description").InnerText;
+                XmlDocument xdoc = new XmlDocument();
 
-			wc.Dispose();
+                xdoc.LoadXml(ec.GetString(pagedata));
 
-			Console.WriteLine("channel:" + channel);
-			Console.WriteLine("latestVer:" + latestVer);
-			Console.WriteLine("releaseDate:" + releaseDate);
-			Console.WriteLine("description:" + description);
+                XmlElement root = xdoc.DocumentElement;
 
-			//Update 確認処理　↑
+                var channel = root.SelectSingleNode("channel").InnerText;
+                var latestVer = root.SelectSingleNode("ver").InnerText;
+                var releaseDate = root.SelectSingleNode("releaseDate").InnerText;
+                var description = root.SelectSingleNode("description").InnerText;
 
-			status.Text = "Getting cookie from Installed Browsers...";
-			getCookie();
+                wc.Dispose();
 
-			status.Text = "All done. wakeing up nex";
+                Console.WriteLine("channel: " + channel);
+                Console.WriteLine("latestVer: " + latestVer);
+                Console.WriteLine("releaseDate: " + releaseDate);
+                Console.WriteLine("description: " + description);
 
-			MainWindow main = new MainWindow();
-			main.Show();
-		}
+                if (latestVer == currentVer)
+                {
+                    status.Text = "no updates found.";
+                }
 
-		public async void getCookie()
-		{
-			var importableBrowsers = await CookieGetters.Default.GetInstancesAsync(true);
+                else
+                {
+                    status.Text = "update found. starting update.";
 
-			var cookieGetter = importableBrowsers.First();
-			var targetUrl = new Uri("http://nicovideo.jp/");
-			var result = await cookieGetter.GetCookiesAsync(targetUrl);
+                    File.Delete(appPath + @"nex.old"); // delete old file
+                    File.Move(appPath + @"nex.exe", appPath + @"nex.old"); // change own name to .old
 
-			//CookieContainerへ取得結果を追加
-			var cookies = new CookieContainer();
-			cookies.Add(result.Cookies);
+                    wc.DownloadFile("https://raw.githubusercontent.com/frainworks/nex/StableChannel/nex.zip", appPath + @"nex.zip");
+                    wc.Dispose();
 
-			//次回起動時用の構成を保存
-			Properties.Settings.Default.SelectedGetterInfo = cookieGetter.SourceInfo;
-		}
+                    ZipFile.ExtractToDirectory(appPath + @"nex.zip", appPath);
+
+                    Process.Start(appPath + @"nex.exe", "/up " + Process.GetCurrentProcess().Id);
+                    Close();
+                }
+            }
+
+            catch
+            {
+                status.Text = "update check failed";
+            }
+
+            // <<< Update 確認処理
+
+            status.Text = "Getting cookie from Installed Browsers...";
+
+            try {
+                var importableBrowsers = await CookieGetters.Default.GetInstancesAsync(true);
+
+                var cookieGetter = importableBrowsers.First();
+                var targetUrl = new Uri("http://nicovideo.jp/");
+                var result = await cookieGetter.GetCookiesAsync(targetUrl);
+
+                // CookieContainerへ取得結果を追加
+                main.cookies.Add(result.Cookies);
+
+                // 次回起動時用の構成を保存
+                Properties.Settings.Default.SelectedGetterInfo = cookieGetter.SourceInfo;
+            }
+
+            catch
+            {
+                status.Text = "Get cookie failed.";
+
+                // login window show
+            }
+
+            status.Text = "All done. waking up nex";
+
+            main.Show();
+        }
 	}
 }

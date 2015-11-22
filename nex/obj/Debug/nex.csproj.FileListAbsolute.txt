@@ -27,7 +27,6 @@ C:\Users\snow\Documents\GitHub\nex\nex\bin\Debug\Newtonsoft.Json.dll
 C:\Users\snow\Documents\GitHub\nex\nex\bin\Debug\NicoNico.Net.dll
 C:\Users\snow\Documents\GitHub\nex\nex\bin\Debug\CoreTweet.xml
 C:\Users\snow\Documents\GitHub\nex\nex\bin\Debug\Newtonsoft.Json.xml
-C:\Users\snow\Documents\GitHub\nex\nex\obj\Debug\nex.csprojResolveAssemblyReference.cache
 C:\Users\snow\Documents\GitHub\nex\nex\obj\Debug\MainWindow.g.cs
 C:\Users\snow\Documents\GitHub\nex\nex\obj\Debug\splash.g.cs
 C:\Users\snow\Documents\GitHub\nex\nex\obj\Debug\App.g.cs

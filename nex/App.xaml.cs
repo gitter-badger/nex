@@ -13,7 +13,6 @@ namespace nex
 	/// </summary>
 	public partial class App : Application
 	{
-		private splash _splash;
 		public splash Splash { get; private set; }
 
 		public App() : base()

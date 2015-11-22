@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -36,11 +37,6 @@ namespace nex
 			app.Splash.Close();
 		}
 
-		private void Window_Loaded(object sender, RoutedEventArgs e)
-		{
-			//
-		}
-
 		private void ExitButton_Click(object sender, RoutedEventArgs e)
 		{
 			Application.Current.Shutdown(); //終了する
@@ -50,5 +46,12 @@ namespace nex
 		{
 			SystemCommands.MinimizeWindow(this); //最小化する
 		}
-	}
+
+        public CookieContainer cookies;
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            motd.Content = "have a nice nsen :)";
+        }
+    }
 }
