@@ -10,7 +10,7 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/m77wkikeme4sb3y6?svg=true)](https://ci.appveyor.com/project/snowhite0804/nex)
 [![Build Status](https://travis-ci.org/frainworks/nex.svg?branch=master)](https://travis-ci.org/frainworks/nex)  
 
-##### Work is progress...
+##### Work in progress...
 
 ## For Deveroper
 plz create your brunch and push there.

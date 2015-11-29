@@ -30,24 +30,6 @@ namespace nex
 			InitializeComponent();
 
 			MouseLeftButtonDown += (sender, e) => DragMove();
-
-            /*
-            if (Environment.CommandLine.IndexOf("/up", StringComparison.CurrentCultureIgnoreCase) != -1)
-            {
-                try
-                {
-                    string[] args = Environment.GetCommandLineArgs();
-                    int pid = Convert.ToInt32(args[2]);
-                    Process.GetProcessById(pid).WaitForExit(); // 終了待ち
-                }
-                catch
-                {
-                    //
-                }
-
-                File.Delete(@"nex.old");
-            }
-            */
         }
 
         private void ExitButton_Click(object sender, RoutedEventArgs e)
@@ -87,7 +69,7 @@ namespace nex
                 MessageBox.Show("インターネットに接続されていません。\r\nインターネットに接続後、再度起動してください。");
             }
 
-            status.Text = "Checking updates from stableChannel...";
+            status.Text = "Checking updates";
 
             try {
 
@@ -111,46 +93,35 @@ namespace nex
 
                 wc.Dispose();
 
-                Console.WriteLine("channel: " + channel);
-                Console.WriteLine("latestVer: " + latestVer);
-                Console.WriteLine("releaseDate: " + releaseDate);
-                Console.WriteLine("description: " + description);
-
                 if (latestVer == currentVer)
                 {
                     status.Text = "no updates found.";
-                    File.Delete(appPath + "nex.old");
-                    File.Delete(appPath + "nex.zip");
                 }
 
                 else
                 {
-                    status.Text = "update found. starting update.";
+                    status.Text = "update found. starting updater.";
 
-                    File.Delete(appPath + "nex.old"); // delete old file
-                    File.Move(appPath + "nex.exe", appPath + "nex.old"); // change own name to .old
+                    Process p = new Process();
+                    p.StartInfo.FileName = appPath + @"updater.exe";
+                    bool result = p.Start();
 
-                    wc.DownloadFile("https://raw.githubusercontent.com/frainworks/nex/StableChannel/nex.zip", appPath + @"nex.zip");
-                    wc.Dispose();
+                    if (result)
+                    {
+                        Application.Current.Shutdown();
+                    }
 
-                    ZipArchive archive = ZipFile.OpenRead(appPath + "nex.zip");
+                    else
+                    {
+                        MessageBox.Show("updater.exe を起動してください");
 
-                    ZipArchiveEntry entry = archive.GetEntry("nex.exe");
-                    entry.ExtractToFile(entry.FullName, true);
-
-                    // ZipFile.ExtractToDirectory(appPath + @"nex.zip", appPath);
-
-                    // Process.Start(appPath + "nex.exe", "/up " + Process.GetCurrentProcess().Id);
-
-                    MessageBox.Show("Updateに成功しました。\r\n再度起動して下さい。");
-
-                    Application.Current.Shutdown();
-
+                        Application.Current.Shutdown();
+                    }
                 }
             }
             catch
             {
-                status.Text = "Failed updates check from stableChannel.";
+                status.Text = "Failed updates check";
             }
 
 
