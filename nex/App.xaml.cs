@@ -8,10 +8,22 @@ using System.Windows;
 
 namespace nex
 {
-    /// <summary>
-    /// App.xaml の相互作用ロジック
-    /// </summary>
-    public partial class App : Application
-    {
-    }
+	/// <summary>
+	/// App.xaml の相互作用ロジック
+	/// </summary>
+	public partial class App : Application
+	{
+		public splash Splash { get; private set; }
+
+		public App() : base()
+		{
+			Startup += Application_Startup;
+		}
+
+		private void Application_Startup(object sender, StartupEventArgs e)
+		{
+			Splash = new splash();
+			Splash.Show();
+		}
+	}
 }

@@ -16,15 +16,19 @@
             <StackPanel Orientation="Horizontal" Margin="5"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Top">
-                <Label Content="ver 0.0.0.0" Foreground="WhiteSmoke"></Label>
-                <Button x:Name="UpdateButton" Content="↑" Foreground="WhiteSmoke" BorderBrush="{x:Null}" Background="{x:Null}" Width="20" Height="20" />
+                <Label x:Name="motd" Content="this is motd" Foreground="WhiteSmoke"></Label>
                 <Button x:Name="MinimizeButton" Content="0"  FontFamily="Marlett" Foreground="WhiteSmoke" BorderBrush="{x:Null}" Background="{x:Null}" Click="MinimizeButton_Click" Width="20" Height="20" />
                 <Button x:Name="ExitButton" Content="r" FontFamily="Marlett" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="WhiteSmoke" Click="ExitButton_Click" Width="20" Height="20"  />
             </StackPanel>
-            <Grid Height="25" Margin="5,5,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="370">
+            <Grid Height="25" Margin="5,5,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="113">
                 <Label x:Name="label" Content="nex Neon - alpha" VerticalAlignment="Top" Height="25" Foreground="WhiteSmoke"/>
             </Grid>
-            <Grid Margin="0,30,0,0" HorizontalAlignment="Left" Width="20"/>
+            <Grid Margin="0,30,0,0" HorizontalAlignment="Left" Width="20">
+                <Ellipse Stroke="WhiteSmoke" Height="20" VerticalAlignment="Bottom"/>
+            </Grid>
+            <Grid Height="244" Margin="20,30,0,0" VerticalAlignment="Top">
+                <Frame x:Name="frame" Content="Frame"/>
+            </Grid>
         </Grid>
     </Border>
 </Window>

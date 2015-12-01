@@ -1,0 +1,13 @@
+C:\Users\snow\Documents\GitHub\nex\Updater\bin\Debug\Updater.exe.config
+C:\Users\snow\Documents\GitHub\nex\Updater\bin\Debug\Updater.exe
+C:\Users\snow\Documents\GitHub\nex\Updater\bin\Debug\Updater.pdb
+C:\Users\snow\Documents\GitHub\nex\Updater\obj\Debug\MainWindow.g.cs
+C:\Users\snow\Documents\GitHub\nex\Updater\obj\Debug\App.g.cs
+C:\Users\snow\Documents\GitHub\nex\Updater\obj\Debug\Updater_MarkupCompile.cache
+C:\Users\snow\Documents\GitHub\nex\Updater\obj\Debug\Updater_MarkupCompile.lref
+C:\Users\snow\Documents\GitHub\nex\Updater\obj\Debug\MainWindow.baml
+C:\Users\snow\Documents\GitHub\nex\Updater\obj\Debug\Updater.g.resources
+C:\Users\snow\Documents\GitHub\nex\Updater\obj\Debug\Updater.Properties.Resources.resources
+C:\Users\snow\Documents\GitHub\nex\Updater\obj\Debug\Updater.csproj.GenerateResource.Cache
+C:\Users\snow\Documents\GitHub\nex\Updater\obj\Debug\Updater.exe
+C:\Users\snow\Documents\GitHub\nex\Updater\obj\Debug\Updater.pdb
