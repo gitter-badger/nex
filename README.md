@@ -1,4 +1,6 @@
 # <a href="#"><img alt="nex NEON logo" src="https://raw.githubusercontent.com/frainworks/nex/snowhite-Branch/nex/img/nex.png" width="30"/></a> nex
+
+[![Join the chat at https://gitter.im/frainworks/nex](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/frainworks/nex?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 <a href="https://github.com/frainworks/nex/wiki"><img src="https://img.shields.io/badge/nex-NEON-red.svg"></a>
 <a href="https://github.com/frainworks/nex/wiki/License"><img src="https://img.shields.io/badge/License-MIT-blue.svg">  
 
